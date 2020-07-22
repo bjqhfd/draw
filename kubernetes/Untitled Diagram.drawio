@@ -1,1 +1,22 @@
-<mxfile host="app.diagrams.net" modified="2020-07-22T03:09:48.744Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36" etag="OkhbDvQ_1WFZKfA3ZNnJ" version="13.4.9" type="github"><diagram id="zxIAbOR2nh3yj-EtN27Y" name="Page-1">jZNRT4MwEMc/DY8uQCdur85NYzJ9mInRt46eUFdoV7rB/PRe5YCRZYkv9Pq7f6/XuyNgi6J5tNzkay1ABXEomoA9BHEcxeEcF09OLbmdT1uQWSlINICN/AGCIdGDFFCNhE5r5aQZw1SXJaRuxLi1uh7LvrQa32p4Bhdgk3J1Sd+lcHlLZ/HdwJ9AZnl3c5TQgwveieklVc6Frs8QWwZsYbV2rVU0C1C+eF1d2nOrK94+MQul+8+BtXnb8Yqz5+bzZb3fJ9/xx+sNRTlydaAHH6EU2mKY3ayaSI0GN7ICewQPzS7Db+W09XWLV+BSwYjAJEN5ojCb+y2Kk8xb2oDlDrUhaRNeGOTltvIL1caduoJbfSgF+JwjdNe5dLAxPPXeGkcMWe4KRW7KHqyD5mpZor7YOKWgC3D2hBI60PeHBpRNaV8P7WadJh+1miCnEcv62EMX0KBGdNuh4X++s9+GLX8B</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2020-07-22T08:20:52.366Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36" etag="I5OEXX-x64t_LYT7ybFw" version="13.4.9" type="github">
+  <diagram id="zxIAbOR2nh3yj-EtN27Y" name="Page-1">
+    <mxGraphModel dx="1209" dy="1763" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="MpTkasa3JxZNMqq6j2YO-1" value="vendor/k8s.io/apiserver/pkg/storage/etcd3/store.go&lt;br&gt;operate etcd3 directly" style="rounded=1;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
+          <mxGeometry x="780" y="320" width="460" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="SxrEYfNyK_6yK8OhG6D1-1" value="vendor/k8s.io/apiserver/pkg/storage/&lt;br&gt;apiserver store to etcd" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="400" y="170" width="240" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="SxrEYfNyK_6yK8OhG6D1-2" value="vendor/k8s.io/apiserver/pkg/storage/storagebackend/factory&lt;br&gt;&lt;br&gt;factory method:&amp;nbsp;&lt;br&gt;&lt;div&gt;func Create(c storagebackend.Config) (storage.Interface, DestroyFunc, error) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; return newETCD3Storage(c)&lt;/div&gt;&lt;div&gt;} // 返回storage.Interface&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="780" y="60" width="460" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="SxrEYfNyK_6yK8OhG6D1-3" value="&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;vendor/k8s.io/apiserver/pkg/storage/interface.go&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;type Interface interface {&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; Create(ctx context.Context, key string, obj, out runtime.Object, ttl uint64)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; Delete,&amp;nbsp;&lt;/span&gt;&lt;span&gt;Watch,&amp;nbsp;&lt;/span&gt;&lt;span&gt;Get,&amp;nbsp;&lt;/span&gt;&lt;span&gt;List&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;}&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="780" y="-80" width="460" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
