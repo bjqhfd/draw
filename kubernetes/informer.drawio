@@ -1,1 +1,79 @@
-<mxfile host="app.diagrams.net" modified="2020-08-11T06:28:27.755Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36" version="13.6.2" etag="2HmfzMeFNCvIJ40Mjqx8" type="github"><diagram id="2o8o1Vfr_suAxSLbTcGj">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2020-08-11T07:50:44.118Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36" etag="bq4zIcvXECLHA70OP6y7" version="13.6.2" type="github">
+  <diagram id="2o8o1Vfr_suAxSLbTcGj" name="Page-1">
+    <mxGraphModel dx="1209" dy="643" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="vQPZoGs5PjVUVbz3xrlM-1" value="&lt;div&gt;func NewSharedInformerFactoryWithOptions(client kubernetes.Interface) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; factory := &amp;amp;sharedInformerFactory{&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; client:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;client,&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; informers:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; make(map[reflect.Type]cache.SharedIndexInformer),&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="120" y="80" width="480" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="vQPZoGs5PjVUVbz3xrlM-2" value="&lt;div&gt;func (f *sharedInformerFactory) Start(stopCh &amp;lt;-chan struct{}) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; go informer.Run(stopCh)&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="120" y="270" width="480" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vQPZoGs5PjVUVbz3xrlM-3" value="&lt;div&gt;func (s *sharedIndexInformer) Run(stopCh &amp;lt;-chan struct{}) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; fifo := NewDeltaFIFOWithOptions(DeltaFIFOOptions{&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; KnownObjects:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; s.indexer,&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; })&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; cfg := &amp;amp;Config{&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; Queue:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; fifo,&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; ListerWatcher:&amp;nbsp; &amp;nbsp; s.listerWatcher,&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; ObjectType:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;s.objectType,&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; Process:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;s.HandleDeltas,&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; }&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; s.controller = New(cfg)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; wg.StartWithChannel(processorStopCh, s.processor.run)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; s.controller.Run(stopCh)&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="120" y="430" width="480" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="vQPZoGs5PjVUVbz3xrlM-4" value="&lt;div&gt;func (c *controller) Run(stopCh &amp;lt;-chan struct{}) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; r := NewReflector(&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; c.config.ListerWatcher,&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; c.config.ObjectType,&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; c.config.Queue,&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; )&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; wg.StartWithChannel(stopCh, r.Run)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; wait.Until(c.processLoop, time.Second, stopCh)&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="120" y="760" width="480" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="vQPZoGs5PjVUVbz3xrlM-5" value="&lt;div&gt;func NewNamedReflector(name string, lw ListerWatcher, expectedType interface{}, store Store){&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; r := &amp;amp;Reflector{&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; listerWatcher: lw,&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; store:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;store,&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="720" y="460" width="520" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="vQPZoGs5PjVUVbz3xrlM-6" value="&lt;div&gt;func (r *Reflector) Run(stopCh &amp;lt;-chan struct{}) {&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; r.ListAndWatch(stopCh)&amp;nbsp; &amp;nbsp;//refer to ListAndWatch&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="721" y="640" width="520" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vQPZoGs5PjVUVbz3xrlM-7" value="&lt;div&gt;func (c *controller) processLoop() {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; for {&amp;nbsp;&amp;nbsp;&lt;/div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;//process: HandleDeltas&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; obj, err := c.config.Queue.Pop(PopProcessFunc(c.config.Process))&amp;nbsp;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="120" y="1020" width="480" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="vQPZoGs5PjVUVbz3xrlM-8" value="&lt;div&gt;func (f *DeltaFIFO) Pop(process PopProcessFunc) (interface{}, error) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; for {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; id := f.queue[0]&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; f.queue = f.queue[1:]&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; item, ok := f.items[id]&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; delete(f.items, id)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; err := process(item)&amp;nbsp; &amp;nbsp;//HandleDeltas&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; return item, err&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="720" y="760" width="520" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="vQPZoGs5PjVUVbz3xrlM-9" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="320" y="200" as="sourcePoint" />
+            <mxPoint x="320" y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vQPZoGs5PjVUVbz3xrlM-10" value="" style="endArrow=classic;html=1;entryX=0.395;entryY=-0.003;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="vQPZoGs5PjVUVbz3xrlM-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="310" y="330" as="sourcePoint" />
+            <mxPoint x="310" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vQPZoGs5PjVUVbz3xrlM-11" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="300" y="670" as="sourcePoint" />
+            <mxPoint x="299" y="755" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vQPZoGs5PjVUVbz3xrlM-12" value="" style="endArrow=classic;html=1;entryX=0.353;entryY=-0.027;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="vQPZoGs5PjVUVbz3xrlM-7">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="290" y="910" as="sourcePoint" />
+            <mxPoint x="290" y="980" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vQPZoGs5PjVUVbz3xrlM-13" value="" style="endArrow=classic;html=1;exitX=1.001;exitY=0.418;exitDx=0;exitDy=0;exitPerimeter=0;entryX=-0.01;entryY=0.576;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="vQPZoGs5PjVUVbz3xrlM-4" target="vQPZoGs5PjVUVbz3xrlM-5">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="641" y="772.5" as="sourcePoint" />
+            <mxPoint x="710" y="800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vQPZoGs5PjVUVbz3xrlM-14" value="" style="endArrow=classic;html=1;exitX=1.001;exitY=0.418;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" target="vQPZoGs5PjVUVbz3xrlM-6">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="870" as="sourcePoint" />
+            <mxPoint x="714.3199999999999" y="870.6599999999999" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vQPZoGs5PjVUVbz3xrlM-15" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1.003;exitY=0.407;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="vQPZoGs5PjVUVbz3xrlM-7" target="vQPZoGs5PjVUVbz3xrlM-8">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="610.56" y="1051.35" as="sourcePoint" />
+            <mxPoint x="610" y="1158.6499999999999" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vQPZoGs5PjVUVbz3xrlM-16" value="&lt;div&gt;func (s *sharedIndexInformer) HandleDeltas(obj interface{}) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; for _, d := range obj.(Deltas) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; switch d.Type {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; case Sync, Replaced, Added, Updated:&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; s.cacheMutationDetector.AddObject(d.Object)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; if old, exists, err := s.indexer.Get(d.Object); err == nil &amp;amp;&amp;amp; exists {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; s.indexer.Update(d.Object)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; s.processor.distribute(updateNotification{oldObj: old, newObj: d.Object}, isSync)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; } else {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; s.indexer.Add(d.Object)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; s.processor.distribute(addNotification{newObj: d.Object}, false)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; }&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; case Deleted:&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; s.indexer.Delete(d.Object)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; s.processor.distribute(deleteNotification{oldObj: d.Object}, false)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; }&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="721" y="950" width="520" height="310" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
