@@ -1,1 +1,28 @@
-<mxfile host="app.diagrams.net" modified="2020-08-22T02:19:59.028Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36" version="13.6.2" etag="J_Fy-ko5UReq7BsSt-uL" type="github"><diagram id="cHE2Pwet2oArfEPLPfTf">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2020-08-22T03:24:46.279Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36" etag="8sM4LtrhbZcRKCPuyL89" version="13.6.2" type="github">
+  <diagram id="cHE2Pwet2oArfEPLPfTf" name="Page-1">
+    <mxGraphModel dx="894" dy="437" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="0bXiwOT7qdR0b-S3DEQD-1" value="&lt;div style=&quot;line-height: 1.75 ; font-size: 14px&quot;&gt;NewAPIServerCommand&lt;/div&gt;&lt;div style=&quot;line-height: 1.75 ; font-size: 14px&quot;&gt;{&lt;/div&gt;&lt;div style=&quot;line-height: 1.75&quot;&gt;&lt;span style=&quot;font-size: 14px&quot;&gt;&amp;nbsp; &amp;nbsp; s := options.NewServerRunOptions()&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 1.75&quot;&gt;&lt;span style=&quot;font-size: 14px&quot;&gt;&amp;nbsp; &amp;nbsp; namedFlagSets := s.Flags()&lt;/span&gt;&lt;span style=&quot;font-size: 14px&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 1.75&quot;&gt;&lt;span style=&quot;font-size: 14px&quot;&gt;&amp;nbsp; &amp;nbsp; completedOptions, err := Complete(s)&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 1.75&quot;&gt;&lt;span style=&quot;font-size: 14px&quot;&gt;&amp;nbsp; &amp;nbsp; Run(completedOptions, genericapiserver.SetupSignalHandler())&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 1.75 ; font-size: 14px&quot;&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="80" y="70" width="440" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="0bXiwOT7qdR0b-S3DEQD-2" value="&amp;nbsp; // NewServerRunOptions creates a new ServerRunOptions object &lt;br&gt;&amp;nbsp; // with default parameters&lt;br&gt;func NewServerRunOptions() *ServerRunOptions &lt;br&gt;{&lt;br&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; s := ServerRunOptions{&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; GenericServerRunOptions:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; genericoptions.NewServerRunOptions(),&lt;/div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;Admission:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;kubeoptions.NewAdmissionOptions(),&lt;br&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;......&lt;br&gt;&amp;nbsp; &amp;nbsp; }&lt;br&gt;}" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="600" y="40" width="440" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="0bXiwOT7qdR0b-S3DEQD-3" value="&lt;div&gt;&lt;span&gt;func (a *AdmissionOptions) AddFlags&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;{&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;enable-admission-plugins&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;}&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;func (a *AdmissionOptions) Validate()&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="600" y="400" width="440" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="0bXiwOT7qdR0b-S3DEQD-4" value="&lt;div&gt;&lt;span&gt;func (s *ServerRunOptions) Flags() (fss cliflag.NamedFlagSets) {&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; s.GenericServerRunOptions.AddUniversalFlags(fss.FlagSet(&quot;generic&quot;))&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; s.Admission.AddFlags(fss.FlagSet(&quot;admission&quot;))&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; ......&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;}&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="600" y="240" width="440" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="0bXiwOT7qdR0b-S3DEQD-5" value="server, err := CreateServerChain(completeOptions, stopCh)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="300" width="440" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="0bXiwOT7qdR0b-S3DEQD-6" value="&lt;div&gt;kubeAPIServerConfig, insecureServingInfo, serviceResolver, pluginInitializer, err := CreateKubeAPIServerConfig(completedOptions)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="400" width="440" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
