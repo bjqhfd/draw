@@ -1,11 +1,44 @@
-<mxfile host="app.diagrams.net" modified="2020-08-29T04:12:40.173Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36" etag="EkLv8bETSRbRIJWKhJjC" version="13.6.4" type="github">
+<mxfile host="app.diagrams.net" modified="2020-08-29T10:43:13.286Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36" etag="v3A4SboZd8fyHfYjQJp9" version="13.6.4" type="github">
   <diagram id="J789HSuGaJoiv6ZchiYH" name="Page-1">
     <mxGraphModel dx="782" dy="437" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="YizOE2Szrx4T3cSO2rfp-1" value="Run(kubeletServer, kubeletDeps, utilfeature.DefaultFeatureGate)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="100" y="80" width="380" height="50" as="geometry" />
+        <mxCell id="YizOE2Szrx4T3cSO2rfp-1" value="Run(kubeletServer, kubeletDeps, utilfeature.DefaultFeatureGate)&lt;br&gt;RunKubelet(kubeServer *options.KubeletServer, kubeDeps *kubelet.Dependencies)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="400" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="YizOE2Szrx4T3cSO2rfp-2" value="&lt;div&gt;startKubelet(k, podCfg, &amp;amp;kubeServer.KubeletConfiguration, kubeDeps, kubeServer.EnableCAdvisorJSONEndpoints, kubeServer.EnableServer)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="420" width="400" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YizOE2Szrx4T3cSO2rfp-3" value="NewMainKubelet" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="230" width="400" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YizOE2Szrx4T3cSO2rfp-4" value="&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;		&lt;/span&gt;kubeInformers := informers.NewSharedInformerFactory(kubeDeps.KubeClient, 0)&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;		&lt;/span&gt;serviceLister = kubeInformers.Core().V1().Services().Lister()&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;		&lt;/span&gt;serviceHasSynced = kubeInformers.Core().V1().Services().Informer().HasSynced&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;		&lt;/span&gt;kubeInformers.Start(wait.NeverStop)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="110" width="560" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="YizOE2Szrx4T3cSO2rfp-5" value="nodeIndexer := cache.NewIndexer(cache.MetaNamespaceKeyFunc, cache.Indexers{})&lt;br&gt;nodeLW := cache.NewListWatchFromClient(kubeDeps.KubeClient.CoreV1().RESTClient(), &quot;nodes&quot;)&lt;br&gt;r := cache.NewReflector(nodeLW, &amp;amp;v1.Node{}, nodeIndexer, 0)&lt;br&gt;go r.Run(wait.NeverStop)" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="520" y="240" width="560" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="YizOE2Szrx4T3cSO2rfp-6" value="klet.cloudResourceSyncManager = cloudresource.NewSyncManager(klet.cloud, nodeName, klet.nodeStatusUpdateFrequency)" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="520" y="360" width="560" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YizOE2Szrx4T3cSO2rfp-7" value="secretManager = secret.NewWatchingSecretManager(kubeDeps.KubeClient)&lt;br&gt;configMapManager = configmap.NewWatchingConfigMapManager(kubeDeps.KubeClient)&lt;br&gt;&lt;div&gt;&lt;span&gt;	&lt;/span&gt;klet.secretManager = secretManager&lt;/div&gt;&lt;div&gt;&lt;span&gt;	&lt;/span&gt;klet.configMapManager = configMapManager&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="520" y="440" width="560" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="YizOE2Szrx4T3cSO2rfp-8" value="&lt;div&gt;&lt;span&gt;	&lt;/span&gt;klet.livenessManager = proberesults.NewManager()&lt;/div&gt;&lt;div&gt;&lt;span&gt;	&lt;/span&gt;klet.startupManager = proberesults.NewManager()&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="550" width="560" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="YizOE2Szrx4T3cSO2rfp-9" value="&lt;div&gt;checkpointManager, err = checkpointmanager.NewCheckpointManager(bootstrapCheckpointPath)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="620" width="560" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YizOE2Szrx4T3cSO2rfp-10" value="klet.podManager = kubepod.NewBasicPodManager(mirrorPodClient, secretManager, configMapManager, checkpointManager)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="710" width="560" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YizOE2Szrx4T3cSO2rfp-11" value="klet.statusManager = status.NewManager(klet.kubeClient, klet.podManager, klet)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="800" width="560" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YizOE2Szrx4T3cSO2rfp-12" value="klet.resourceAnalyzer = serverstats.NewResourceAnalyzer(klet, kubeCfg.VolumeStatsAggPeriod.Duration)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="880" width="560" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
