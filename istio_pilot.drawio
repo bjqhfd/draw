@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-11-12T02:50:15.327Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.193 Safari/537.36" etag="RmGj7UtgAinXb5ey7eN6" version="13.6.5" type="github">
+<mxfile host="app.diagrams.net" modified="2020-11-12T03:27:52.464Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.193 Safari/537.36" etag="Hmd2gtLQh8_-kREwzoUP" version="13.6.5" type="github">
   <diagram id="1WSthCP1p7yNz_Qq4u5r" name="Page-1">
     <mxGraphModel dx="1209" dy="643" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -8,7 +8,79 @@
           <mxGeometry x="80" y="80" width="460" height="180" as="geometry" />
         </mxCell>
         <mxCell id="hdn6pJ4XfOclm7P6a8ZE-2" value="pilot/pkg/xds/discovery.go&lt;br&gt;&lt;div&gt;func NewDiscoveryServer(env *model.Environment) *DiscoveryServer {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; out := &amp;amp;DiscoveryServer{&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; Env:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;env,&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; EndpointShardsByService: map[string]map[string]*EndpointShards{},&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; concurrentPushLimit:&amp;nbsp; &amp;nbsp; &amp;nbsp;make(chan struct{}, features.PushThrottle),&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; pushChannel:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;make(chan *model.PushRequest, 10),&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; pushQueue:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;NewPushQueue(),&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; adsClients:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; map[string]*Connection{},&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; },&lt;/div&gt;&lt;div&gt;&lt;span&gt;	&lt;/span&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
-          <mxGeometry x="640" y="40" width="700" height="200" as="geometry" />
+          <mxGeometry x="640" y="40" width="410" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="hdn6pJ4XfOclm7P6a8ZE-3" value="pilot/pkg/bootstrap/server.go&lt;br&gt;&lt;div&gt;func (s *Server) initControllers(args *PilotArgs) error {&lt;/div&gt;&lt;div&gt;&amp;nbsp; s.initCertController(args)&lt;/div&gt;&lt;div&gt;&amp;nbsp; s.initConfigController(args)&lt;/div&gt;&lt;div&gt;&amp;nbsp; s.initServiceControllers(args)&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="120" y="320" width="350" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="hdn6pJ4XfOclm7P6a8ZE-4" value="pilot/pkg/bootstrap/configcontroller.go&lt;br&gt;&lt;div&gt;func (s *Server) initConfigController(args *PilotArgs) error {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; meshConfig := s.environment.Mesh()&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; if len(meshConfig.ConfigSources) &amp;gt; 0 {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; s.initConfigSources(args) // Using MCP for config.&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; } else {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; s.initK8SConfigStore(args)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; }&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; aggregateConfigController, err := configaggregate.MakeCache(s.ConfigStores)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; s.configController = aggregateConfigController&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; s.environment.IstioConfigStore = model.MakeIstioStore(s.configController)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; s.addStartFunc(func(stop &amp;lt;-chan struct{}) error {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; go s.configController.Run(stop)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; return nil&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; })&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="560" y="320" width="450" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="hdn6pJ4XfOclm7P6a8ZE-5" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" target="hdn6pJ4XfOclm7P6a8ZE-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="540" y="165" as="sourcePoint" />
+            <mxPoint x="590" y="115" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hdn6pJ4XfOclm7P6a8ZE-6" value="" style="endArrow=classic;html=1;entryX=0.452;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.434;exitY=1.011;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="hdn6pJ4XfOclm7P6a8ZE-1" target="hdn6pJ4XfOclm7P6a8ZE-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="282.5" y="300" as="sourcePoint" />
+            <mxPoint x="337.5" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hdn6pJ4XfOclm7P6a8ZE-7" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="470" y="380" as="sourcePoint" />
+            <mxPoint x="560" y="369" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hdn6pJ4XfOclm7P6a8ZE-8" value="&lt;div&gt;pilot/pkg/bootstrap/configcontroller.go&lt;/div&gt;&lt;div&gt;func (s *Server) initK8SConfigStore(args *PilotArgs) error {&lt;/div&gt;&lt;div&gt;&lt;span&gt;	&lt;/span&gt;configController, err := s.makeKubeConfigController(args)&lt;/div&gt;&lt;div&gt;&lt;span&gt;	&lt;/span&gt;s.ConfigStores = append(s.ConfigStores, configController)&lt;/div&gt;&lt;div&gt;&lt;span&gt;		&lt;/span&gt;s.ConfigStores = append(s.ConfigStores, gateway.NewController(s.kubeClient, configController, args.RegistryOptions.KubeOptions))&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;s.initInprocessAnalysisController(args)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;	&lt;/span&gt;s.initStatusController(args, features.EnableStatus)&lt;/div&gt;&lt;div&gt;&lt;span&gt;	&lt;/span&gt;s.XDSServer.InternalGen.Store = configController&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="110" width="430" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="hdn6pJ4XfOclm7P6a8ZE-9" value="" style="endArrow=classic;html=1;entryX=-0.008;entryY=0.33;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="hdn6pJ4XfOclm7P6a8ZE-8">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1010" y="350" as="sourcePoint" />
+            <mxPoint x="1060" y="300" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1030" y="330" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hdn6pJ4XfOclm7P6a8ZE-10" value="&lt;div&gt;// 监听crd&lt;/div&gt;&lt;div&gt;pilot/pkg/bootstrap/configcontroller.go&lt;/div&gt;&lt;div&gt;func (s *Server) makeKubeConfigController(args *PilotArgs) (model.ConfigStoreCache, error) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; c, err := crdclient.New(s.kubeClient,&amp;nbsp; buildLedger(args.RegistryOptions), args.Revision,&amp;nbsp; &amp;nbsp;args.RegistryOptions.KubeOptions)&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1560" y="40" width="410" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="hdn6pJ4XfOclm7P6a8ZE-11" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1510" y="120" as="sourcePoint" />
+            <mxPoint x="1560" y="70" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hdn6pJ4XfOclm7P6a8ZE-12" value="pilot/pkg/config/kube/crdclient/client.go&lt;br&gt;&lt;div&gt;func New(client kube.Client)model.ConfigStoreCache {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; out := &amp;amp;Client{&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; schemas:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;collections.PilotServiceApi,&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; queue:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;queue.NewQueue(1 * time.Second),&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; kinds:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;map[config.GroupVersionKind]*cacheHandler{},&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; }&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; known := knownCRDs(client.Ext())&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; for _, s := range out.schemas.All() {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; name := fmt.Sprintf(&quot;%s.%s&quot;, s.Resource().Plural(), s.Resource().Group())&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; if _, f := known[name]; f {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; var i informers.GenericInformer&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; if s.Resource().Group() == &quot;networking.x-k8s.io&quot; {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; i, err =&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;client.ServiceApisInformer().ForResource(s.Resource().GroupVersionResource())&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; } else {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; i, err = client.IstioInformer().ForResource(s.Resource().GroupVersionResource())&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; }&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; out.kinds[s.Resource().GroupVersionKind()] = createCacheHandler(out, s, i)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; }&lt;/div&gt;&lt;div&gt;&lt;span&gt;	&lt;/span&gt;}&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="2040" y="40" width="520" height="400" as="geometry" />
+        </mxCell>
+        <mxCell id="hdn6pJ4XfOclm7P6a8ZE-13" value="" style="endArrow=classic;html=1;entryX=0.003;entryY=0.107;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="hdn6pJ4XfOclm7P6a8ZE-12">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1970" y="120" as="sourcePoint" />
+            <mxPoint x="2020" y="70" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hdn6pJ4XfOclm7P6a8ZE-14" value="// 监听gateway&lt;br&gt;pilot/pkg/config/kube/gateway/controller.go&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;func NewController(client kubernetes.Interface, c&amp;nbsp; &amp;nbsp;model.ConfigStoreCache, options controller2.Options)&amp;nbsp; &amp;nbsp;model.ConfigStoreCache {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; return &amp;amp;controller{client, c, options.DomainSuffix}&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1560" y="240" width="400" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="hdn6pJ4XfOclm7P6a8ZE-15" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1520" y="250" as="sourcePoint" />
+            <mxPoint x="1560" y="252" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hdn6pJ4XfOclm7P6a8ZE-16" value="&lt;div&gt;pilot/pkg/config/kube/gateway/controller.go&lt;/div&gt;&lt;div&gt;func (c controller) RegisterEventHandler(typ config.GroupVersionKind, handler func(config.Config, config.Config, model.Event)) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; c.cache.RegisterEventHandler(typ, func(prev, cur config.Config, event model.Event) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; handler(prev, cur, event)&lt;/div&gt;&lt;div&gt;&lt;span&gt;	&lt;/span&gt;})&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;func (c controller) Run(stop &amp;lt;-chan struct{}) {&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="2000" y="480" width="490" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="hdn6pJ4XfOclm7P6a8ZE-17" value="" style="endArrow=classic;html=1;entryX=0.048;entryY=-0.027;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;" edge="1" parent="1" source="hdn6pJ4XfOclm7P6a8ZE-14" target="hdn6pJ4XfOclm7P6a8ZE-16">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1940" y="460" as="sourcePoint" />
+            <mxPoint x="1990" y="410" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
