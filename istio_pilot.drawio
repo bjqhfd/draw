@@ -1,1 +1,16 @@
-<mxfile host="app.diagrams.net" modified="2020-11-12T02:37:21.126Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.193 Safari/537.36" version="13.6.5" etag="UY1hFN5wh7xxnUKaJBT2" type="github"><diagram id="1WSthCP1p7yNz_Qq4u5r">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2020-11-12T02:50:15.327Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.193 Safari/537.36" etag="RmGj7UtgAinXb5ey7eN6" version="13.6.5" type="github">
+  <diagram id="1WSthCP1p7yNz_Qq4u5r" name="Page-1">
+    <mxGraphModel dx="1209" dy="643" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hdn6pJ4XfOclm7P6a8ZE-1" value="pilot/pkg/bootstrap/server.go&lt;br&gt;func NewServer(args *PilotArgs) (*Server, error) {&lt;br&gt;&lt;br&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; s := &amp;amp;Server{&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; XDSServer:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;xds.NewDiscoveryServer(e, args.Plugins, args.PodName),&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; }&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp;&amp;nbsp;s.initControllers(args)&lt;/div&gt;&lt;div&gt;&amp;nbsp;&amp;nbsp;s.initRegistryEventHandlers()&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;}" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="80" y="80" width="460" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="hdn6pJ4XfOclm7P6a8ZE-2" value="pilot/pkg/xds/discovery.go&lt;br&gt;&lt;div&gt;func NewDiscoveryServer(env *model.Environment) *DiscoveryServer {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; out := &amp;amp;DiscoveryServer{&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; Env:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;env,&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; EndpointShardsByService: map[string]map[string]*EndpointShards{},&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; concurrentPushLimit:&amp;nbsp; &amp;nbsp; &amp;nbsp;make(chan struct{}, features.PushThrottle),&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; pushChannel:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;make(chan *model.PushRequest, 10),&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; pushQueue:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;NewPushQueue(),&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; adsClients:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; map[string]*Connection{},&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; },&lt;/div&gt;&lt;div&gt;&lt;span&gt;	&lt;/span&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="640" y="40" width="700" height="200" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
