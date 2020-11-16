@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2020-11-16T05:11:06.005Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.193 Safari/537.36" etag="Fq9COivYfmY3GQC4s8TK" version="13.9.8" type="github">
+<mxfile host="app.diagrams.net" modified="2020-11-16T07:39:24.767Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.193 Safari/537.36" etag="gnZHa57dU_VWUKRELMWs" version="13.9.8" type="github">
   <diagram id="1WSthCP1p7yNz_Qq4u5r" name="Page-1">
-    <mxGraphModel dx="1449" dy="643" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1449" dy="586" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -68,7 +68,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="hdn6pJ4XfOclm7P6a8ZE-16" value="&lt;div&gt;pilot/pkg/config/kube/gateway/controller.go&lt;/div&gt;&lt;div&gt;func (c controller) RegisterEventHandler(typ config.GroupVersionKind, handler func(config.Config, config.Config, model.Event)) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; c.cache.RegisterEventHandler(typ, func(prev, cur config.Config, event model.Event) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; handler(prev, cur, event)&lt;/div&gt;&lt;div&gt;&lt;span&gt; &lt;/span&gt;})&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;func (c controller) Run(stop &amp;lt;-chan struct{}) {&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
-          <mxGeometry x="2000" y="480" width="470" height="170" as="geometry" />
+          <mxGeometry x="1970" y="420" width="470" height="170" as="geometry" />
         </mxCell>
         <mxCell id="hdn6pJ4XfOclm7P6a8ZE-17" value="" style="endArrow=classic;html=1;entryX=0.048;entryY=-0.027;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;" parent="1" source="hdn6pJ4XfOclm7P6a8ZE-14" target="hdn6pJ4XfOclm7P6a8ZE-16" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -108,7 +108,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="nB5sZIHavd1A4j-XCwEL-7" value="&lt;div&gt;pilot/pkg/serviceregistry/kube/controller/controller.go&lt;/div&gt;&lt;div&gt;func registerHandlers(informer cache.SharedIndexInformer, q queue.Instance, otype string,&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; handler func(interface{}, model.Event)) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; wrappedHandler := func(obj interface{}, event model.Event) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; obj = tryGetLatestObject(informer, obj)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;return handler(obj, event)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; }&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; informer.AddEventHandler(&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; cache.ResourceEventHandlerFuncs{&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; AddFunc: func(obj interface{}) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; incrementEvent(otype, &quot;add&quot;)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; q.Push(func() error {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; return wrappedHandler(obj, model.EventAdd)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;})&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;},&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; })&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
-          <mxGeometry x="1960" y="660" width="510" height="290" as="geometry" />
+          <mxGeometry x="1955" y="610" width="510" height="290" as="geometry" />
         </mxCell>
         <mxCell id="nB5sZIHavd1A4j-XCwEL-8" value="" style="endArrow=classic;html=1;entryX=0.012;entryY=0.076;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" target="nB5sZIHavd1A4j-XCwEL-7" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -117,7 +117,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="x_8f15Q5pfNo6OUVc7Sv-1" value="pilot/pkg/queue/instance.go&lt;br&gt;&lt;div&gt;func (q *queueImpl) Push(item Task) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; q.tasks = append(q.tasks, item)&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
-          <mxGeometry x="1930" y="980" width="340" height="120" as="geometry" />
+          <mxGeometry x="1410" y="1020" width="340" height="120" as="geometry" />
         </mxCell>
         <mxCell id="x_8f15Q5pfNo6OUVc7Sv-2" value="pilot/pkg/serviceregistry/aggregate/controller.go&lt;br&gt;&lt;div&gt;func (c *Controller) Run(stop &amp;lt;-chan struct{}) {&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; for _, r := range c.GetRegistries() {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; go r.Run(stop)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; }&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;lt;-stop&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
           <mxGeometry x="160" y="980" width="280" height="160" as="geometry" />
@@ -154,14 +154,24 @@
         </mxCell>
         <mxCell id="x_8f15Q5pfNo6OUVc7Sv-9" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="1980" y="940" as="sourcePoint" />
-            <mxPoint x="1980" y="980" as="targetPoint" />
+            <mxPoint x="1998" y="904" as="sourcePoint" />
+            <mxPoint x="1998" y="940" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="x_8f15Q5pfNo6OUVc7Sv-10" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="1927" y="1020" as="sourcePoint" />
-            <mxPoint x="1280" y="1019.5" as="targetPoint" />
+            <mxPoint x="1410" y="1060" as="sourcePoint" />
+            <mxPoint x="1280" y="1059.5" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="x_8f15Q5pfNo6OUVc7Sv-11" value="pilot/pkg/serviceregistry/kube/controller/controller.go&lt;br&gt;// 将该onServiceEvent push到queue中，queue run会调用该类函数&lt;br&gt;&lt;div&gt;func (c *Controller) onServiceEvent(curr interface{}, event model.Event) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; svc, ok := curr.(*v1.Service)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; svcConv := kube.ConvertService(*svc, c.domainSuffix, c.clusterID)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; // event: model.EventAdd, model.EventUpdate, model.EventDelete&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; c.xdsUpdater.SvcUpdate(c.clusterID, string(svcConv.Hostname), svc.Namespace, event)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; for _, f := range c.serviceHandlers {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; f(svcConv, event)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1975" y="940" width="480" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="x_8f15Q5pfNo6OUVc7Sv-12" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1970" y="890" as="sourcePoint" />
+            <mxPoint x="1750" y="1072" as="targetPoint" />
           </mxGeometry>
         </mxCell>
       </root>
