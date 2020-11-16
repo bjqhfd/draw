@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-11-16T05:10:42.055Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.193 Safari/537.36" etag="D4v9__b9Do8EIOhD1Bs3" version="13.9.8" type="github">
+<mxfile host="app.diagrams.net" modified="2020-11-16T05:11:06.005Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.193 Safari/537.36" etag="Fq9COivYfmY3GQC4s8TK" version="13.9.8" type="github">
   <diagram id="1WSthCP1p7yNz_Qq4u5r" name="Page-1">
     <mxGraphModel dx="1449" dy="643" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -79,9 +79,9 @@
         <mxCell id="nB5sZIHavd1A4j-XCwEL-1" value="&lt;div&gt;pilot/pkg/bootstrap/servicecontroller.go&lt;/div&gt;&lt;div&gt;func (s *Server) initServiceControllers(args *PilotArgs) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; serviceControllers := s.ServiceController()&lt;span&gt; &lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; s.initKubeRegistry(serviceControllers, args)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; s.serviceEntryStore = serviceentry.NewServiceDiscovery(s.configController,&amp;nbsp; &amp;nbsp; &amp;nbsp;s.environment.IstioConfigStore, s.XDSServer)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; serviceControllers.AddRegistry(s.serviceEntryStore)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; s.kubeRegistry.AppendWorkloadHandler(s.serviceEntryStore.WorkloadInstanceHandler)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; s.serviceEntryStore.AppendWorkloadHandler(s.kubeRegistry.WorkloadInstanceHandler)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; s.addStartFunc(func(stop &amp;lt;-chan struct{}) error {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; go serviceControllers.Run(stop)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; })&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
           <mxGeometry x="160" y="640" width="490" height="280" as="geometry" />
         </mxCell>
-        <mxCell id="nB5sZIHavd1A4j-XCwEL-2" value="" style="endArrow=classic;html=1;entryX=0.224;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.437;exitY=1.06;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="hdn6pJ4XfOclm7P6a8ZE-3" target="nB5sZIHavd1A4j-XCwEL-1" edge="1">
+        <mxCell id="nB5sZIHavd1A4j-XCwEL-2" value="" style="endArrow=classic;html=1;entryX=0.224;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" target="nB5sZIHavd1A4j-XCwEL-1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="270" y="560" as="sourcePoint" />
+            <mxPoint x="270" y="420" as="sourcePoint" />
             <mxPoint x="320" y="510" as="targetPoint" />
             <Array as="points">
               <mxPoint x="270" y="590" />
