@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-11-17T15:20:12.322Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36" etag="Ed_EanUvDySsd9g309dD" version="13.9.9" type="github">
+<mxfile host="app.diagrams.net" modified="2020-11-17T15:21:16.721Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36" etag="53vUfhzamhewuMqgHEt5" version="13.9.9" type="github">
   <diagram id="6TW5W0XCIM6I71bb3Syc" name="Page-1">
     <mxGraphModel dx="1130" dy="437" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -53,7 +53,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="kg50LUV-51LIkfejvlK1-14" value="&lt;div&gt;// pilot/pkg/config/aggregate/config.go&lt;/div&gt;&lt;div&gt;func (cr *storeCache) RegisterEventHandler(kind config.GroupVersionKind, handler func(config.Config, config.Config, model.Event)) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; for _, cache := range cr.caches {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; if _, exists := cache.Schemas().FindByGroupVersionKind(kind); exists {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; cache.RegisterEventHandler(kind, handler)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; }&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;func (cr *storeCache) Run(stop &amp;lt;-chan struct{}) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; for _, cache := range cr.caches {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; go cache.Run(stop)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; }&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;lt;-stop&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
-          <mxGeometry x="40" y="840" width="770" height="260" as="geometry" />
+          <mxGeometry x="40" y="840" width="720" height="260" as="geometry" />
         </mxCell>
         <mxCell id="kg50LUV-51LIkfejvlK1-15" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.1;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.001;exitY=0.887;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="kg50LUV-51LIkfejvlK1-2" target="kg50LUV-51LIkfejvlK1-14">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
