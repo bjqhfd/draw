@@ -1,1 +1,49 @@
-<mxfile host="app.diagrams.net" modified="2020-11-17T13:55:49.266Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36" version="13.9.9" etag="aEqs4z7ixkyyWPYd0ELd" type="github"><diagram id="6TW5W0XCIM6I71bb3Syc">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2020-11-17T14:46:55.849Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36" etag="s3LXs-DkSANd293jHcRo" version="13.9.9" type="github">
+  <diagram id="6TW5W0XCIM6I71bb3Syc" name="Page-1">
+    <mxGraphModel dx="1022" dy="437" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="kg50LUV-51LIkfejvlK1-2" value="&lt;div&gt;pilot/pkg/bootstrap/configcontroller.go&lt;/div&gt;&lt;div&gt;func (s *Server) initConfigController(args *PilotArgs) {&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; s.initK8SConfigStore(args)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; aggregateConfigController, err := configaggregate.MakeCache(s.ConfigStores)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; s.configController = aggregateConfigController&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; s.environment.IstioConfigStore = model.MakeIstioStore(s.configController)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; s.addStartFunc(func(stop &amp;lt;-chan struct{}) error {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; go s.configController.Run(stop)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; return nil&lt;/div&gt;&lt;div&gt;&lt;span&gt;	&lt;/span&gt;})&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="70" y="150" width="460" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="kg50LUV-51LIkfejvlK1-3" value="pilot/pkg/bootstrap/configcontroller.go&lt;br&gt;// ConfigStores 存储configcontroller&lt;br&gt;&lt;div&gt;func (s *Server) initK8SConfigStore(args *PilotArgs) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; configController = s.makeKubeConfigController(args)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; s.ConfigStores = append(s.ConfigStores, configController)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; s.initStatusController(args, features.EnableStatus)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; s.XDSServer.InternalGen.Store = configController&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="600" y="150" width="360" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="kg50LUV-51LIkfejvlK1-4" value="&lt;div&gt;pilot/pkg/config/aggregate/config.go&lt;/div&gt;&lt;div&gt;func MakeCache(caches []model.ConfigStoreCache) model.ConfigStoreCache {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; return MakeWriteableCache(caches, nil)&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;&lt;div&gt;func MakeWriteableCache(caches []model.ConfigStoreCache, writer model.ConfigStore)&amp;nbsp;&lt;/div&gt;&lt;div&gt;model.ConfigStoreCache {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; stores := make([]model.ConfigStore, 0, len(caches))&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; for _, cache := range caches {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;stores = append(stores, cache)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; }&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; store, err := makeStore(stores, writer)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; return &amp;amp;storeCache{&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; ConfigStore: store,&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; caches:&amp;nbsp; &amp;nbsp; &amp;nbsp; caches,&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="600" y="320" width="590" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="kg50LUV-51LIkfejvlK1-5" value="&lt;div&gt;pilot/pkg/bootstrap/configcontroller.go&lt;/div&gt;&lt;div&gt;func (s *Server) makeKubeConfigController(args *PilotArgs) model.ConfigStoreCache {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; c = crdclient.New(s.kubeClient, buildLedger(args.RegistryOptions), args.Revision, args.RegistryOptions.KubeOptions)&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="70" y="30" width="650" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="kg50LUV-51LIkfejvlK1-6" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" target="kg50LUV-51LIkfejvlK1-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="530" y="250" as="sourcePoint" />
+            <mxPoint x="580" y="200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kg50LUV-51LIkfejvlK1-7" value="" style="endArrow=classic;html=1;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" target="kg50LUV-51LIkfejvlK1-5">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="777" y="150" as="sourcePoint" />
+            <mxPoint x="827" y="100" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kg50LUV-51LIkfejvlK1-8" value="" style="endArrow=classic;html=1;entryX=0.05;entryY=0.017;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="kg50LUV-51LIkfejvlK1-4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="530" y="290" as="sourcePoint" />
+            <mxPoint x="620" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kg50LUV-51LIkfejvlK1-9" value="pilot/pkg/model/config.go&lt;br&gt;// configcontroller需要实现ConfigStore的接口，如Get, List, Create, Update, Delete 等&lt;br&gt;&lt;div&gt;func MakeIstioStore(store ConfigStore) IstioConfigStore {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; return &amp;amp;istioConfigStore{store}&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;&lt;div&gt;type istioConfigStore struct {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; ConfigStore&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;&lt;div&gt;type IstioConfigStore interface {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; ConfigStore&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; ServiceEntries() []config.Config&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; Gateways(workloadLabels labels.Collection) []config.Config&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; AuthorizationPolicies(namespace string) []config.Config&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;&lt;div&gt;type ConfigStore interface {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; Get(typ config.GroupVersionKind, name, namespace string) *config.Config&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; List(typ config.GroupVersionKind, namespace string) []config.Config&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; Create(config config.Config) revision string&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; Update(config config.Config) newRevision string&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; Delete(typ config.GroupVersionKind, name, namespace string)&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="80" y="460" width="510" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="kg50LUV-51LIkfejvlK1-10" value="" style="endArrow=classic;html=1;entryX=0.911;entryY=0.01;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="kg50LUV-51LIkfejvlK1-9">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="530" y="372" as="sourcePoint" />
+            <mxPoint x="544" y="453" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
