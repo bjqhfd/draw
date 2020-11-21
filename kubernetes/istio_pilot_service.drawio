@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-11-21T11:54:16.488Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36" etag="dp0eRV0qSNTDG_D51g2J" version="13.10.0" type="github">
+<mxfile host="app.diagrams.net" modified="2020-11-21T12:02:38.654Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36" etag="biGK5ob8PmH3uGMEl-0L" version="13.10.0" type="github">
   <diagram id="8sb3Bw6IxuCxyVAl2Eib" name="Page-1">
     <mxGraphModel dx="1105" dy="437" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -68,6 +68,18 @@
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="1980" y="440" as="sourcePoint" />
             <mxPoint x="2030" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_EVcE_OySbLcWITSbfoF-16" value="&lt;div&gt;// pilot/pkg/serviceregistry/aggregate/controller.go&lt;/div&gt;&lt;div&gt;func (c *Controller) Run(stop &amp;lt;-chan struct{}) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; for _, r := range c.GetRegistries() {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; go r.Run(stop)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="120" y="580" width="300" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="_EVcE_OySbLcWITSbfoF-17" value="&lt;div&gt;// pilot/pkg/serviceregistry/kube/controller/controller.go&lt;/div&gt;&lt;div&gt;func (c *Controller) Run(stop &amp;lt;-chan struct{}) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; c.networksWatcher.AddNetworksHandler(c.reloadNetworkLookup)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; c.reloadNetworkLookup()&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp;go c.nsInformer.Run(stop)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp;c.queue.Run(stop)&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="120" y="720" width="450" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="_EVcE_OySbLcWITSbfoF-18" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="680" as="sourcePoint" />
+            <mxPoint x="280" y="720" as="targetPoint" />
           </mxGeometry>
         </mxCell>
       </root>
