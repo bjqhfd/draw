@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2020-12-04T08:05:23.085Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36" etag="WB-dUqfhMinHmw142KM8" version="13.10.6" type="github">
+<mxfile host="app.diagrams.net" modified="2020-12-04T08:15:16.145Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36" etag="TFqu77r5Sfkn1Z-gQbIQ" version="13.10.6" type="github">
   <diagram id="46lXkTHeNMov4aTLj0D8" name="Page-1">
-    <mxGraphModel dx="1705" dy="756" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1449" dy="643" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -89,33 +89,33 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="tSRv4DZZhCvuTlEG8yDt-8" value="&lt;div&gt;// pilot/pkg/xds/pushqueue.go&lt;/div&gt;&lt;div&gt;func (p *PushQueue) Enqueue(con *Connection, pushRequest *model.PushRequest) {&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; // If its already in progress, merge the info and return&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; if request, f := p.processing[con]; f {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; p.processing[con] = request.Merge(pushRequest)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; return&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; }&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; if request, f := p.pending[con]; f {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; p.pending[con] = request.Merge(pushRequest)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; return&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; }&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; p.pending[con] = pushRequest&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; p.queue = append(p.queue, con)&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
-          <mxGeometry x="2080" y="280" width="360" height="240" as="geometry" />
+          <mxGeometry x="2080" y="280" width="360" height="250" as="geometry" />
         </mxCell>
-        <mxCell id="tSRv4DZZhCvuTlEG8yDt-9" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+        <mxCell id="tSRv4DZZhCvuTlEG8yDt-9" value="" style="endArrow=classic;html=1;entryX=0.444;entryY=-0.011;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="tSRv4DZZhCvuTlEG8yDt-8">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="2240" y="230" as="sourcePoint" />
+            <mxPoint x="2240" y="210" as="sourcePoint" />
             <mxPoint x="2310" y="230" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="tSRv4DZZhCvuTlEG8yDt-10" value="&lt;div&gt;// pilot/pkg/xds/pushqueue.go&lt;/div&gt;&lt;div&gt;func (p *PushQueue) Dequeue() (con *Connection&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;, request *model.PushRequest) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; con, p.queue = p.queue[0], p.queue[1:]&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; request = p.pending[con]&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; delete(p.pending, con)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; // Mark the connection as in progress&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; p.processing[con] = nil&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; return con, request&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
-          <mxGeometry x="1890" y="710" width="290" height="200" as="geometry" />
+          <mxGeometry x="1800" y="880" width="290" height="200" as="geometry" />
         </mxCell>
         <mxCell id="tSRv4DZZhCvuTlEG8yDt-11" value="&lt;div&gt;// pilot/pkg/xds/discovery.go&lt;/div&gt;&lt;div&gt;func (s *DiscoveryServer) sendPushes(stopCh &amp;lt;-chan struct{}) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; doSendPushes(stopCh, s.concurrentPushLimit, s.pushQueue)&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
           <mxGeometry x="870" y="880" width="380" height="120" as="geometry" />
         </mxCell>
         <mxCell id="tSRv4DZZhCvuTlEG8yDt-12" value="&lt;div&gt;// pilot/pkg/xds/discovery.go&lt;/div&gt;&lt;div&gt;func doSendPushes(stopCh &amp;lt;-chan struct{}, semaphore chan struct{},&amp;nbsp;&lt;/div&gt;&lt;div&gt;queue *PushQueue) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; for {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; select {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; default:&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; client, push, shuttingdown := queue.Dequeue()&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; go func() {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; pushEv := &amp;amp;Event{&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; pushRequest: push,&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; done:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; doneFunc,&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; }&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; select {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; case client.pushChannel &amp;lt;- pushEv:&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; return&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; }&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; }()&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; }&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
-          <mxGeometry x="1460" y="840" width="390" height="340" as="geometry" />
+          <mxGeometry x="1330" y="880" width="390" height="340" as="geometry" />
         </mxCell>
-        <mxCell id="tSRv4DZZhCvuTlEG8yDt-13" value="" style="endArrow=classic;html=1;entryX=0.03;entryY=0.059;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="tSRv4DZZhCvuTlEG8yDt-11" target="tSRv4DZZhCvuTlEG8yDt-12">
+        <mxCell id="tSRv4DZZhCvuTlEG8yDt-13" value="" style="endArrow=classic;html=1;entryX=-0.009;entryY=0.18;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="tSRv4DZZhCvuTlEG8yDt-11" target="tSRv4DZZhCvuTlEG8yDt-12">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="1340" y="769.5" as="sourcePoint" />
             <mxPoint x="1410" y="769.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="tSRv4DZZhCvuTlEG8yDt-14" value="" style="endArrow=classic;html=1;entryX=-0.001;entryY=0.607;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="tSRv4DZZhCvuTlEG8yDt-10">
+        <mxCell id="tSRv4DZZhCvuTlEG8yDt-14" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="1800" y="790" as="sourcePoint" />
-            <mxPoint x="1870" y="790" as="targetPoint" />
+            <mxPoint x="1724" y="963" as="sourcePoint" />
+            <mxPoint x="1796" y="963" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="tSRv4DZZhCvuTlEG8yDt-15" value="" style="endArrow=classic;html=1;entryX=0.184;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="tSRv4DZZhCvuTlEG8yDt-11">
@@ -132,6 +132,15 @@
             <mxPoint x="920" y="90" as="sourcePoint" />
             <mxPoint x="980" y="58" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="tSRv4DZZhCvuTlEG8yDt-18" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.448;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="tSRv4DZZhCvuTlEG8yDt-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1510" y="530" as="sourcePoint" />
+            <mxPoint x="1560" y="480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tSRv4DZZhCvuTlEG8yDt-19" value="pushFn" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1530" y="480" width="40" height="20" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
