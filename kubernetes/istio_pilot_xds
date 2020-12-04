@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-12-04T08:41:05.578Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36" etag="Kd8AofRpZjoX7iX995pD" version="13.10.6" type="github">
+<mxfile host="app.diagrams.net" modified="2020-12-04T08:44:13.034Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36" etag="gzvf8qbeiTVO6HjNkeDy" version="13.10.6" type="github">
   <diagram id="46lXkTHeNMov4aTLj0D8" name="Page-1">
     <mxGraphModel dx="1449" dy="643" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -56,7 +56,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="ZHw_AmZgxKfiUINL6i-G-1" value="&lt;div&gt;// pilot/pkg/model/service.go&lt;br&gt;&lt;/div&gt;&lt;div&gt;type Service struct {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; Attributes ServiceAttributes&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; Ports PortList `json:&quot;ports,omitempty&quot;`&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; ServiceAccounts []string `json:&quot;serviceAccounts,omitempty&quot;`&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; // Name of the service, e.g. &quot;catalog.mystore.com&quot;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; Hostname host.Name `json:&quot;hostname&quot;`&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp;// Address specifies the service IPv4 address of the load balancer&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; Address string `json:&quot;address,omitempty&quot;`&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; AutoAllocatedAddress string `json:&quot;autoAllocatedAddress,omitempty&quot;`&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; ClusterVIPs map[string]string `json:&quot;cluster-vips,omitempty&quot;`&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; Resolution Resolution&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; // MeshExternal (if true) indicates that the service is external to the mesh.&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; // These services are defined using Istio&#39;s ServiceEntry spec.&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; MeshExternal bool&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
-          <mxGeometry x="1400" y="1760" width="560" height="320" as="geometry" />
+          <mxGeometry x="170" y="1790" width="560" height="320" as="geometry" />
         </mxCell>
         <mxCell id="tSRv4DZZhCvuTlEG8yDt-1" value="&lt;div&gt;// pilot/pkg/xds/discovery.go&lt;/div&gt;&lt;div&gt;func (s *DiscoveryServer) handleUpdates(stopCh &amp;lt;-chan struct{}) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; debounce(s.pushChannel, stopCh, s.debounceOptions, s.Push)&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
           <mxGeometry x="550" y="20" width="370" height="100" as="geometry" />
@@ -141,6 +141,15 @@
         </mxCell>
         <mxCell id="tSRv4DZZhCvuTlEG8yDt-19" value="pushFn" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="1530" y="480" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="tSRv4DZZhCvuTlEG8yDt-20" value="&lt;div&gt;// pilot/pkg/xds/discovery.go&lt;/div&gt;&lt;div&gt;func (s *DiscoveryServer) ConfigUpdate(req *model.PushRequest) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; inboundConfigUpdates.Increment()&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; s.pushChannel &amp;lt;- req&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1400" y="1760" width="370" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="tSRv4DZZhCvuTlEG8yDt-21" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1320" y="1800" as="sourcePoint" />
+            <mxPoint x="1400" y="1800" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
