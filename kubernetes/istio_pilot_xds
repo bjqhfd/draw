@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-12-04T08:15:16.145Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36" etag="TFqu77r5Sfkn1Z-gQbIQ" version="13.10.6" type="github">
+<mxfile host="app.diagrams.net" modified="2020-12-04T08:24:47.240Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36" etag="OuP3Voejhfe8AbcG31K6" version="13.10.6" type="github">
   <diagram id="46lXkTHeNMov4aTLj0D8" name="Page-1">
     <mxGraphModel dx="1449" dy="643" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -32,7 +32,7 @@
           <mxGeometry x="840" y="1280" width="510" height="150" as="geometry" />
         </mxCell>
         <mxCell id="8N6xWeT6v25rFAzVIo8F-3" value="&lt;div&gt;// pilot/pkg/xds/eds.go&lt;/div&gt;&lt;div&gt;// 主要作用只是更新DiscoveryServer的EndpointShardsByService map&lt;/div&gt;&lt;div&gt;func (s *DiscoveryServer) edsCacheUpdate(clusterID, hostname string, namespace string,&lt;/div&gt;&lt;div&gt;&lt;span&gt; &lt;/span&gt;istioEndpoints []*model.IstioEndpoint) bool {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; fullPush := false&lt;/div&gt;&amp;nbsp; // 更新DiscoveryServer的EndpointShardsByService map&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; ep, created := s.getOrCreateEndpointShard(hostname, namespace)&amp;nbsp;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; if created {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; fullPush = true&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; }&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; serviceAccounts := sets.Set{}&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; for _, e := range istioEndpoints {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; if e.ServiceAccount != &quot;&quot; {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; serviceAccounts.Insert(e.ServiceAccount)&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; }&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; }&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; if !fullPush &amp;amp;&amp;amp; !serviceAccounts.Equals(ep.ServiceAccounts) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; fullPush = true&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; }&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; ep.Shards[clusterID] = istioEndpoints&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; ep.ServiceAccounts = serviceAccounts&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; return fullPush&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
-          <mxGeometry x="1400" y="1280" width="670" height="400" as="geometry" />
+          <mxGeometry x="1400" y="1280" width="490" height="400" as="geometry" />
         </mxCell>
         <mxCell id="8N6xWeT6v25rFAzVIo8F-4" value="" style="endArrow=classic;html=1;entryX=-0.001;entryY=0.387;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" target="8N6xWeT6v25rFAzVIo8F-2" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -98,7 +98,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="tSRv4DZZhCvuTlEG8yDt-10" value="&lt;div&gt;// pilot/pkg/xds/pushqueue.go&lt;/div&gt;&lt;div&gt;func (p *PushQueue) Dequeue() (con *Connection&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;, request *model.PushRequest) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; con, p.queue = p.queue[0], p.queue[1:]&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; request = p.pending[con]&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; delete(p.pending, con)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; // Mark the connection as in progress&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; p.processing[con] = nil&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; return con, request&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
-          <mxGeometry x="1800" y="880" width="290" height="200" as="geometry" />
+          <mxGeometry x="1800" y="810" width="290" height="200" as="geometry" />
         </mxCell>
         <mxCell id="tSRv4DZZhCvuTlEG8yDt-11" value="&lt;div&gt;// pilot/pkg/xds/discovery.go&lt;/div&gt;&lt;div&gt;func (s *DiscoveryServer) sendPushes(stopCh &amp;lt;-chan struct{}) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;&lt;/span&gt;&amp;nbsp; &amp;nbsp; doSendPushes(stopCh, s.concurrentPushLimit, s.pushQueue)&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
           <mxGeometry x="870" y="880" width="380" height="120" as="geometry" />
@@ -112,9 +112,9 @@
             <mxPoint x="1410" y="769.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="tSRv4DZZhCvuTlEG8yDt-14" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+        <mxCell id="tSRv4DZZhCvuTlEG8yDt-14" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" target="tSRv4DZZhCvuTlEG8yDt-10">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="1724" y="963" as="sourcePoint" />
+            <mxPoint x="1720" y="990" as="sourcePoint" />
             <mxPoint x="1796" y="963" as="targetPoint" />
           </mxGeometry>
         </mxCell>
