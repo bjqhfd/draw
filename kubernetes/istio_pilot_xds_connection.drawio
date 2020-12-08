@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-12-07T08:14:08.635Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36" etag="Zp8dzd9hiEdnsENO3K15" version="13.10.9" type="github">
+<mxfile host="app.diagrams.net" modified="2020-12-08T13:24:15.020Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36" etag="Y7OTK1wj4GJiflj9B0yH" version="13.10.9" type="github">
   <diagram id="8Z5l7oX32oWCbpCxlC_2" name="Page-1">
     <mxGraphModel dx="1022" dy="437" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -16,7 +16,7 @@
         <mxCell id="nhtH7vUH3YWTf0dfOCQL-4" value="&lt;div&gt;// pilog/pkg/xds/ads.go&amp;nbsp;&lt;/div&gt;&lt;div&gt;func (s *DiscoveryServer) receive(con *Connection, reqChannel chan *discovery.DiscoveryRequest) {&lt;/div&gt;&lt;div&gt;&lt;span&gt; &lt;/span&gt;firstReq := true&lt;/div&gt;&lt;div&gt;&lt;span&gt; &lt;/span&gt;for {&lt;/div&gt;&lt;div&gt;&lt;span&gt;  &lt;/span&gt;req, err := con.stream.Recv()&lt;/div&gt;&lt;div&gt;&lt;span&gt;  &lt;/span&gt;if firstReq {&lt;/div&gt;&lt;div&gt;&lt;span&gt;   &lt;/span&gt;firstReq = false&lt;/div&gt;&lt;div&gt;&lt;span&gt;   &lt;/span&gt;s.initConnection(req.Node, con)&lt;/div&gt;&lt;div&gt;&lt;span&gt;  &lt;/span&gt;}&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span&gt;  &lt;/span&gt;select {&lt;/div&gt;&lt;div&gt;&lt;span&gt;  &lt;/span&gt;case reqChannel &amp;lt;- req:&lt;/div&gt;&lt;div&gt;&lt;span&gt;  &lt;/span&gt;}&lt;/div&gt;&lt;div&gt;&lt;span&gt; &lt;/span&gt;}&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
           <mxGeometry x="720" y="810" width="380" height="220" as="geometry" />
         </mxCell>
-        <mxCell id="nhtH7vUH3YWTf0dfOCQL-5" value="&lt;div&gt;// pilog/pkg/xds/ads.go&amp;nbsp;&lt;/div&gt;&lt;div&gt;func (s *DiscoveryServer) processRequest(req *discovery.DiscoveryRequest, con *Connection) error {&lt;/div&gt;&lt;div&gt;&lt;span&gt; &lt;/span&gt;push := s.globalPushContext()&lt;/div&gt;&lt;div&gt;&lt;span&gt; &lt;/span&gt;return s.pushXds(con, push, versionInfo(), con.Watched(req.TypeUrl), &amp;amp;model.PushRequest{Full: true})&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
+        <mxCell id="nhtH7vUH3YWTf0dfOCQL-5" value="&lt;div&gt;// pilog/pkg/xds/ads.go&amp;nbsp;&lt;/div&gt;&lt;div&gt;func (s *DiscoveryServer) processRequest(req *discovery.DiscoveryRequest, con *Connection) error {&lt;/div&gt;&lt;div&gt;&lt;span&gt; &lt;/span&gt;push := s.globalPushContext()&lt;/div&gt;&lt;div&gt;&lt;span&gt; &lt;/span&gt;return s.pushXds(con, push, versionInfo(), con.Watched(req.TypeUrl), &amp;amp;model.PushRequest{Full: true}) // 首次全量更新&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
           <mxGeometry x="720" y="1080" width="400" height="160" as="geometry" />
         </mxCell>
         <mxCell id="nhtH7vUH3YWTf0dfOCQL-6" value="" style="endArrow=classic;html=1;entryX=-0.009;entryY=0.421;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" target="nhtH7vUH3YWTf0dfOCQL-4" edge="1">
@@ -97,7 +97,7 @@
             <mxPoint x="1390" y="1590" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="U2Q4NtInBIXudPV4uZjc-1" value="" style="endArrow=classic;html=1;entryX=0.023;entryY=0.969;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="nhtH7vUH3YWTf0dfOCQL-2">
+        <mxCell id="U2Q4NtInBIXudPV4uZjc-1" value="" style="endArrow=classic;html=1;entryX=0.023;entryY=0.969;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" target="nhtH7vUH3YWTf0dfOCQL-2" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="590" y="850" as="sourcePoint" />
             <mxPoint x="640" y="800" as="targetPoint" />
