@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2020-12-08T13:24:15.020Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36" etag="Y7OTK1wj4GJiflj9B0yH" version="13.10.9" type="github">
+<mxfile host="app.diagrams.net" modified="2020-12-09T05:07:29.815Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="y5fCrme3f_tqEdxVbgIZ" version="13.11.0" type="github">
   <diagram id="8Z5l7oX32oWCbpCxlC_2" name="Page-1">
-    <mxGraphModel dx="1022" dy="437" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1849" dy="437" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -101,6 +101,51 @@
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="590" y="850" as="sourcePoint" />
             <mxPoint x="640" y="800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oYCwi5PmY8g_NuQjfDfJ-1" value="&lt;div&gt;// pilot/pkg/bootstrap/server.go&lt;/div&gt;&lt;div&gt;func (s *Server) initGrpcServer(options *istiokeepalive.Options) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;	&lt;/span&gt;grpcOptions := s.grpcServerOptions(options)&lt;/div&gt;&lt;div&gt;&lt;span&gt;	&lt;/span&gt;s.grpcServer = grpc.NewServer(grpcOptions...)&lt;/div&gt;&lt;div&gt;&lt;span&gt;	&lt;/span&gt;s.XDSServer.Register(s.grpcServer)&lt;/div&gt;&lt;div&gt;&lt;span&gt;	&lt;/span&gt;reflection.Register(s.grpcServer)&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="-640" y="610" width="360" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="oYCwi5PmY8g_NuQjfDfJ-2" value="&lt;div&gt;// pilot/pkg/xds/discovery.go&lt;/div&gt;&lt;div&gt;func (s *DiscoveryServer) Register(rpcs *grpc.Server) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;	&lt;/span&gt;// Register v3 server&lt;/div&gt;&lt;div&gt;&lt;span&gt;	&lt;/span&gt;discovery.RegisterAggregatedDiscoveryServiceServer(rpcs, s)&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="-640" y="840" width="360" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="oYCwi5PmY8g_NuQjfDfJ-3" value="&lt;div&gt;// go-control-plane-master/envoy/service/discovery/v3/ads.pb.go&lt;/div&gt;&lt;div&gt;func RegisterAggregatedDiscoveryServiceServer(s *grpc.Server, srv AggregatedDiscoveryServiceServer) {&lt;/div&gt;&lt;div&gt;&lt;span&gt;	&lt;/span&gt;s.RegisterService(&amp;amp;_AggregatedDiscoveryService_serviceDesc, srv)&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="-640" y="1039" width="440" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="oYCwi5PmY8g_NuQjfDfJ-4" value="&lt;div&gt;// go-control-plane-master/envoy/service/discovery/v3/ads.pb.go&lt;/div&gt;&lt;div&gt;var _AggregatedDiscoveryService_serviceDesc = grpc.ServiceDesc{&lt;/div&gt;&lt;div&gt;&lt;span&gt;	&lt;/span&gt;ServiceName: &quot;envoy.service.discovery.v3.AggregatedDiscoveryService&quot;,&lt;/div&gt;&lt;div&gt;&lt;span&gt;	&lt;/span&gt;HandlerType: (*AggregatedDiscoveryServiceServer)(nil),&lt;/div&gt;&lt;div&gt;&lt;span&gt;	&lt;/span&gt;Methods:&amp;nbsp; &amp;nbsp; &amp;nbsp;[]grpc.MethodDesc{},&lt;/div&gt;&lt;div&gt;&lt;span&gt;	&lt;/span&gt;Streams: []grpc.StreamDesc{&lt;/div&gt;&lt;div&gt;&lt;span&gt;		&lt;/span&gt;{&lt;/div&gt;&lt;div&gt;&lt;span&gt;			&lt;/span&gt;StreamName:&amp;nbsp; &amp;nbsp; &quot;StreamAggregatedResources&quot;,&lt;/div&gt;&lt;div&gt;&lt;span&gt;			&lt;/span&gt;Handler:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;_AggregatedDiscoveryService_StreamAggregatedResources_Handler,&lt;/div&gt;&lt;div&gt;&lt;span&gt;			&lt;/span&gt;ServerStreams: true,&lt;/div&gt;&lt;div&gt;&lt;span&gt;			&lt;/span&gt;ClientStreams: true,&lt;/div&gt;&lt;div&gt;&lt;span&gt;		&lt;/span&gt;},&lt;/div&gt;&lt;div&gt;&lt;span&gt;		&lt;/span&gt;{&lt;/div&gt;&lt;div&gt;&lt;span&gt;			&lt;/span&gt;StreamName:&amp;nbsp; &amp;nbsp; &quot;DeltaAggregatedResources&quot;,&lt;/div&gt;&lt;div&gt;&lt;span&gt;			&lt;/span&gt;Handler:&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;_AggregatedDiscoveryService_DeltaAggregatedResources_Handler,&lt;/div&gt;&lt;div&gt;&lt;span&gt;			&lt;/span&gt;ServerStreams: true,&lt;/div&gt;&lt;div&gt;&lt;span&gt;			&lt;/span&gt;ClientStreams: true,&lt;/div&gt;&lt;div&gt;&lt;span&gt;		&lt;/span&gt;},&lt;/div&gt;&lt;div&gt;&lt;span&gt;	&lt;/span&gt;},&lt;/div&gt;&lt;div&gt;&lt;span&gt;	&lt;/span&gt;Metadata: &quot;envoy/service/discovery/v3/ads.proto&quot;,&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="-640" y="1240" width="560" height="360" as="geometry" />
+        </mxCell>
+        <mxCell id="oYCwi5PmY8g_NuQjfDfJ-5" value="&lt;div&gt;// grpc library&amp;nbsp;&lt;/div&gt;&lt;div&gt;func (s *Server) RegisterService(sd *ServiceDesc, ss interface{}) {&lt;/div&gt;&lt;div&gt;&amp;nbsp; ht := reflect.TypeOf(sd.HandlerType).Elem()&lt;/div&gt;&lt;div&gt;&amp;nbsp; st := reflect.TypeOf(ss)&lt;/div&gt;&lt;div&gt;&amp;nbsp; s.register(sd, ss)&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;&lt;div&gt;func (s *Server) register(sd *ServiceDesc, ss interface{}) {&lt;/div&gt;&lt;div&gt;&amp;nbsp; //初始化一个服务&lt;/div&gt;&lt;div&gt;&amp;nbsp; srv := &amp;amp;service{&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; server: ss,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; md:&amp;nbsp; &amp;nbsp; &amp;nbsp;make(map[string]*MethodDesc),&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; sd:&amp;nbsp; &amp;nbsp; &amp;nbsp;make(map[string]*StreamDesc),&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; mdata:&amp;nbsp; sd.Metadata,&lt;/div&gt;&lt;div&gt;&amp;nbsp; }&lt;/div&gt;&lt;div&gt;&amp;nbsp; //根据名字映射方法&lt;/div&gt;&lt;div&gt;&amp;nbsp; for i := range sd.Methods {&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; d := &amp;amp;sd.Methods[i]&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; srv.md[d.MethodName] = d&lt;/div&gt;&lt;div&gt;&amp;nbsp; }&lt;/div&gt;&lt;div&gt;&amp;nbsp; for i := range sd.Streams {&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; d := &amp;amp;sd.Streams[i]&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; srv.sd[d.StreamName] = d&lt;/div&gt;&lt;div&gt;&amp;nbsp; }&lt;/div&gt;&lt;div&gt;&amp;nbsp; 把服务注册到server中&lt;/div&gt;&lt;div&gt;&amp;nbsp; s.m[sd.ServiceName] = srv&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="-640" y="1660" width="410" height="410" as="geometry" />
+        </mxCell>
+        <mxCell id="oYCwi5PmY8g_NuQjfDfJ-6" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-480" y="780" as="sourcePoint" />
+            <mxPoint x="-480" y="840" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oYCwi5PmY8g_NuQjfDfJ-7" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-480" y="1170" as="sourcePoint" />
+            <mxPoint x="-480" y="1240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oYCwi5PmY8g_NuQjfDfJ-8" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-480" y="960" as="sourcePoint" />
+            <mxPoint x="-483" y="1037" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oYCwi5PmY8g_NuQjfDfJ-9" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-480" y="1600" as="sourcePoint" />
+            <mxPoint x="-480" y="1660" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oYCwi5PmY8g_NuQjfDfJ-10" value="" style="endArrow=classic;html=1;entryX=1.005;entryY=0.597;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="oYCwi5PmY8g_NuQjfDfJ-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="116" y="1016" as="sourcePoint" />
+            <mxPoint x="110" y="990" as="targetPoint" />
           </mxGeometry>
         </mxCell>
       </root>
