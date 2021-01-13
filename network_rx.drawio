@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2021-01-13T05:36:22.922Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" etag="W0JqqZ68c7a6WweG6Nkl" version="14.0.1" type="github">
+<mxfile host="app.diagrams.net" modified="2021-01-13T07:27:41.895Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" etag="g-aCAwl2zLMNoJD_lvig" version="14.0.1" type="github">
   <diagram id="WGyHwO1dzaSm4JvsysSr" name="Page-1">
-    <mxGraphModel dx="1449" dy="643" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1449" dy="1812" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -11,7 +11,7 @@
           <mxGeometry x="240" y="320" width="280" height="80" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-5" value="加载网卡驱动，初始化" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="240" y="80" width="280" height="50" as="geometry" />
+          <mxGeometry x="240" y="-800" width="280" height="50" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-6" value="产生硬件中断，通知系统收到了一个包" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="240" y="440" width="280" height="80" as="geometry" />
@@ -39,6 +39,63 @@
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-14" value="包从协议层进入相应 socket 的接收队列" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="240" y="1520" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-15" value="&lt;h3&gt;初始化&lt;/h3&gt;&lt;div&gt;drivers/net/ethernet/intel/igb/igb_main.c&lt;/div&gt;&lt;div&gt;static int __init igb_init_module(void)&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;&amp;nbsp; ret = pci_register_driver(&amp;amp;igb_driver);&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="640" y="-960" width="440" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-16" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="240" width="440" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-18" value="&lt;h3&gt;PCI 初始化&lt;/h3&gt;&lt;div&gt;Intel I350 网卡是 PCI express 设备&lt;/div&gt;&lt;div&gt;当设备驱动编译时，MODULE_DEVICE_TABLE 宏（定义在 include/module.h）&amp;nbsp;&lt;/div&gt;&lt;div&gt;会导出一个 PCI 设备 ID 列表（a table of PCI device IDs），&lt;/div&gt;&lt;div&gt;驱动据此识别它可以 控制的设备，内核也会依据这个列表对不同设备加载相应驱动&lt;/div&gt;&lt;div&gt;igb 驱动的设备表和 PCI 设备 ID&lt;/div&gt;&lt;div&gt;static DEFINE_PCI_DEVICE_TABLE(igb_pci_tbl) = {&lt;/div&gt;&lt;div&gt;&amp;nbsp; { PCI_VDEVICE(INTEL, E1000_DEV_ID_I210_FIBER), board_82575 },&lt;/div&gt;&lt;div&gt;&amp;nbsp; { PCI_VDEVICE(INTEL, E1000_DEV_ID_I210_SERDES), board_82575 },&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;&lt;div&gt;MODULE_DEVICE_TABLE(pci, igb_pci_tbl);&lt;/div&gt;&lt;div&gt;static struct pci_driver igb_driver = {&lt;/div&gt;&lt;div&gt;&amp;nbsp; .id_table = igb_pci_tbl,&lt;/div&gt;&lt;div&gt;&amp;nbsp; .probe&amp;nbsp; &amp;nbsp; = igb_probe,&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="640" y="-800" width="440" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-19" value="&lt;h3&gt;&lt;font style=&quot;font-size: 10px&quot;&gt;网络设备初始化&lt;/font&gt;&lt;/h3&gt;&lt;div&gt;每个PCI驱动注册了一个probe()方法&lt;/div&gt;&lt;div&gt;典型的过程：&lt;/div&gt;&lt;div&gt;1.启用 PCI 设备&lt;/div&gt;&lt;div&gt;2.请求（requesting）内存范围和 IO 端口&lt;/div&gt;&lt;div&gt;3.设置 DMA 掩码&lt;/div&gt;&lt;div&gt;4.注册设备驱动支持的 ethtool 方法&lt;/div&gt;&lt;div&gt;5.注册所需的 watchdog（例如e1000e 有一个检测设备是否僵死的 watchdog）&lt;/div&gt;&lt;div&gt;6.创建、初始化和注册一个 struct net_device_ops 类型变量，这个变量包含了用于设备相关的回调函数，&lt;span&gt;例如打开设备、发送数据到网络、设置 MAC 地址等&lt;/span&gt;&lt;/div&gt;&lt;div&gt;7.创建、初始化和注册一个更高层的 struct net_device 类型变量（一个变量就代表了一个设备）&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="640" y="-560" width="510" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-20" value="&lt;h3&gt;网络设备启动&lt;/h3&gt;&lt;div&gt;igb_probe设备初始化工作&lt;/div&gt;&lt;div&gt;1.注册 struct net_device_ops 变量&lt;/div&gt;&lt;div&gt;2.注册 ethtool 相关的方法&lt;/div&gt;&lt;div&gt;3.软中断(IRQ)&lt;/div&gt;&lt;div&gt;4.NAPI&lt;/div&gt;&lt;div&gt;5.&lt;span&gt;igb驱动的NAPI初始化&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="640" y="-320" width="270" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-22" value="&lt;h3&gt;struct net_device_ops&lt;/h3&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;网络设备相关的操作函数都注册到这个类型的变量中&lt;/div&gt;&lt;div&gt;static const struct net_device_ops igb_netdev_ops = {&lt;/div&gt;&lt;div&gt;&amp;nbsp; .ndo_open&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;= igb_open,&lt;/div&gt;&lt;div&gt;&amp;nbsp; .ndo_stop&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;= igb_close,&lt;/div&gt;&lt;h4&gt;&amp;nbsp; .ndo_start_xmit&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;= igb_xmit_frame,&lt;/h4&gt;&lt;div&gt;&amp;nbsp; .ndo_get_stats64&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; = igb_get_stats64,&lt;/div&gt;&lt;div&gt;&amp;nbsp; .ndo_set_rx_mode&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; = igb_set_rx_mode,&lt;/div&gt;&lt;div&gt;&amp;nbsp; .ndo_set_mac_address&amp;nbsp; &amp;nbsp; = igb_set_mac,&lt;/div&gt;&lt;div&gt;&amp;nbsp; .ndo_change_mtu&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;= igb_change_mtu,&lt;/div&gt;&lt;div&gt;&amp;nbsp; .ndo_do_ioctl&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;= igb_ioctl,&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1241" y="-900" width="359" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-23" value="" style="endArrow=classic;html=1;entryX=0.002;entryY=0.217;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="0JL8JYg0sagm1pvVuTmE-22">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="910" y="-270" as="sourcePoint" />
+            <mxPoint x="960" y="-320" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1160" y="-350" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-24" value="&lt;h3&gt;软中断（IRQ）&lt;/h3&gt;&lt;div&gt;当一个数据帧通过DMA写到RAM（内存）后，网卡会产生一个硬件中断（IRQ），通知数据包到了。有三种常见的硬中 断类型：&lt;/div&gt;&lt;div&gt;MSI-X, MSI, legacy IRQ. 如果有大量的数据包到达，就会产生大量的硬件中断。CPU 忙于处 理硬件中断的时候,&amp;nbsp;&lt;/div&gt;&lt;div&gt;可用于处理其他任务的时间就会减少。NAPI（New API）是一种新的机制，可以减少产生的硬件中断的数量&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1236" y="-600" width="409" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-25" value="&lt;h3&gt;NAPI&lt;/h3&gt;&lt;div&gt;NAPI 的使用方式：&lt;/div&gt;&lt;div&gt;1. 驱动打开 NAPI 功能，默认处于未工作状态（没有在收包）&lt;/div&gt;&lt;div&gt;2. 数据包到达，网卡通过DMA写到内存&lt;/div&gt;&lt;div&gt;3. 网卡触发一个硬中断，中断处理函数开始执行&lt;/div&gt;&lt;div&gt;4. 软中断（softirq），唤醒 NAPI 子系统。这会触发在一个单独的线程里,调用驱动注册的 poll 方法收包&lt;/div&gt;&lt;div&gt;5. 驱动禁止网卡产生新的硬件中断。这样做是为了NAPI能够在收包的时候不会被新的中断打扰&lt;/div&gt;&lt;div&gt;6. 一旦没有包需要收了，NAPI 关闭，网卡的硬中断重新开启&lt;/div&gt;&lt;div&gt;7. 转步骤 2&lt;/div&gt;&lt;div&gt;和传统方式相比，NAPI 一次中断会接收多个包，因此可以减少硬件中断的数量。&lt;/div&gt;&lt;div&gt;poll 方法是通过调用 netif_napi_add 注册到 NAPI 的，同时还可以指定权重 weight，大部分驱动都 hardcode 为 64&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1241" y="-440" width="399" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-26" value="&lt;h3&gt;igb驱动的NAPI初始化&lt;/h3&gt;&lt;div&gt;1.如果支持 MSI-X，调用 pci_enable_msix 打开它&lt;/div&gt;&lt;div&gt;2.计算和初始化一些配置，包括网卡收发队列的数量&lt;/div&gt;&lt;div&gt;3.调用 igb_alloc_q_vector 创建每个发送和接收队列&lt;/div&gt;&lt;div&gt;4.igb_alloc_q_vector 会进一步调用 netif_napi_add 注册 poll 方法到 NAPI 变量&lt;/div&gt;&lt;div&gt;&lt;div&gt;static int igb_alloc_q_vector(struct igb_adapter *adapter)&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;&amp;nbsp; /* initialize NAPI */&lt;/div&gt;&lt;div&gt;&amp;nbsp; netif_napi_add(adapter-&amp;gt;netdev, &amp;amp;q_vector-&amp;gt;napi, igb_poll, 64);&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1241" y="-160" width="399" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-28" value="" style="endArrow=classic;html=1;entryX=0;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" target="0JL8JYg0sagm1pvVuTmE-24">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="910" y="-250" as="sourcePoint" />
+            <mxPoint x="1160" y="-330" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1170" y="-330" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-29" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="910" y="-220" as="sourcePoint" />
+            <mxPoint x="1240" y="-350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-30" value="" style="endArrow=classic;html=1;entryX=0.007;entryY=0.095;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;" edge="1" parent="1" source="0JL8JYg0sagm1pvVuTmE-20" target="0JL8JYg0sagm1pvVuTmE-26">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="950" y="-150" as="sourcePoint" />
+            <mxPoint x="1000" y="-200" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
