@@ -1,1 +1,46 @@
-<mxfile host="app.diagrams.net" modified="2021-01-13T02:18:48.415Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" version="14.0.1" etag="D79Ex7j_S4TXycCHzbFf" type="github"><diagram id="WGyHwO1dzaSm4JvsysSr">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2021-01-13T05:36:22.922Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" etag="W0JqqZ68c7a6WweG6Nkl" version="14.0.1" type="github">
+  <diagram id="WGyHwO1dzaSm4JvsysSr" name="Page-1">
+    <mxGraphModel dx="1449" dy="643" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-2" value="包从外部网络进入网卡" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="200" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-3" value="网卡（通过 DMA）将包 copy 到内核内存中的 ring buffer" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="320" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-5" value="加载网卡驱动，初始化" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="80" width="280" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-6" value="产生硬件中断，通知系统收到了一个包" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="440" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-7" value="驱动调用 NAPI，如果轮询（poll）还没开始，就开始轮询" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="560" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-8" value="ksoftirqd 进程调用 NAPI 的 poll 函数从 ring buffer 收包（poll 函数是网卡 驱动在初始化阶段注册的；每个 CPU 上都运行着一个 ksoftirqd 进程，在系统启动期 间就注册了）" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="710" width="280" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-9" value="ring buffer 里包对应的内存区域解除映射（unmapped）" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="840" width="280" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-10" value="（通过 DMA 进入）内存的数据包以 skb 的形式被送至更上层处理" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="1000" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-11" value="如果 packet steering 功能打开，或者网卡有多队列，网卡收到的包会被分发到多个 CPU" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="1120" width="280" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-12" value="包从队列进入协议层" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="1240" width="280" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-13" value="协议层处理包" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="1400" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-14" value="包从协议层进入相应 socket 的接收队列" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="1520" width="280" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
