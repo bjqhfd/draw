@@ -1,44 +1,44 @@
-<mxfile host="app.diagrams.net" modified="2021-01-13T08:42:34.281Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" etag="jmE9DhIQ2Ir7mJHOUtoz" version="14.0.1" type="github">
+<mxfile host="app.diagrams.net" modified="2021-01-13T08:46:43.290Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" etag="Q-hlMptUbYQ9H7K6Bw-U" version="14.0.1" type="github">
   <diagram id="WGyHwO1dzaSm4JvsysSr" name="Page-1">
-    <mxGraphModel dx="1449" dy="1812" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2070" dy="2088" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="0JL8JYg0sagm1pvVuTmE-2" value="包从外部网络进入网卡" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="280" y="800" width="280" height="80" as="geometry" />
+          <mxGeometry x="160" y="-650" width="280" height="80" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-3" value="网卡（通过 DMA）将包 copy 到内核内存中的 ring buffer" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="280" y="920" width="280" height="80" as="geometry" />
+          <mxGeometry x="160" y="-530" width="280" height="80" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-5" value="加载网卡驱动，初始化" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="240" y="-800" width="280" height="50" as="geometry" />
+          <mxGeometry x="160" y="-800" width="270" height="50" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-6" value="产生硬件中断，通知系统收到了一个包" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="280" y="1040" width="280" height="80" as="geometry" />
+          <mxGeometry x="160" y="-410" width="280" height="80" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-7" value="驱动调用 NAPI，如果轮询（poll）还没开始，就开始轮询" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="280" y="1160" width="280" height="80" as="geometry" />
+          <mxGeometry x="160" y="-290" width="280" height="80" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-8" value="ksoftirqd 进程调用 NAPI 的 poll 函数从 ring buffer 收包（poll 函数是网卡 驱动在初始化阶段注册的；每个 CPU 上都运行着一个 ksoftirqd 进程，在系统启动期 间就注册了）" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="280" y="1310" width="280" height="90" as="geometry" />
+          <mxGeometry x="160" y="-140" width="280" height="90" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-9" value="ring buffer 里包对应的内存区域解除映射（unmapped）" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="280" y="1440" width="280" height="100" as="geometry" />
+          <mxGeometry x="160" y="-10" width="280" height="100" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-10" value="（通过 DMA 进入）内存的数据包以 skb 的形式被送至更上层处理" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="280" y="1600" width="280" height="80" as="geometry" />
+          <mxGeometry x="160" y="150" width="280" height="80" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-11" value="如果 packet steering 功能打开，或者网卡有多队列，网卡收到的包会被分发到多个 CPU" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="280" y="1720" width="280" height="70" as="geometry" />
+          <mxGeometry x="160" y="270" width="280" height="70" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-12" value="包从队列进入协议层" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="280" y="1840" width="280" height="100" as="geometry" />
+          <mxGeometry x="160" y="390" width="280" height="100" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-13" value="协议层处理包" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="280" y="2000" width="280" height="80" as="geometry" />
+          <mxGeometry x="160" y="550" width="280" height="80" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-14" value="包从协议层进入相应 socket 的接收队列" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="280" y="2120" width="280" height="80" as="geometry" />
+          <mxGeometry x="160" y="670" width="280" height="80" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-15" value="&lt;h3&gt;初始化&lt;/h3&gt;&lt;div&gt;drivers/net/ethernet/intel/igb/igb_main.c&lt;/div&gt;&lt;div&gt;static int __init igb_init_module(void)&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;&amp;nbsp; ret = pci_register_driver(&amp;amp;igb_driver);&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
           <mxGeometry x="640" y="-960" width="440" height="130" as="geometry" />
@@ -142,7 +142,7 @@
         <mxCell id="0JL8JYg0sagm1pvVuTmE-44" value="&lt;div&gt;网卡调优&lt;/div&gt;&lt;div&gt;1. 查看 RX 队列数量&lt;/div&gt;&lt;div&gt;&amp;nbsp;ethtool -l eth0&lt;/div&gt;&lt;div&gt;2. 调整 RX queues数量&lt;/div&gt;&lt;div&gt;ethtool -L 可以修改RX queue数量&lt;/div&gt;&lt;div&gt;3.调整 RX queue 的大小&lt;/div&gt;&lt;div&gt;ethtool -g 可以查看 queue的大小&lt;/div&gt;&lt;div&gt;用 ethtool -G 修改 queue 大小&lt;/div&gt;&lt;div&gt;4. 调整 RX queue 的权重（weight）&lt;/div&gt;&lt;div&gt;一些网卡支持给不同的 queue 设置不同的权重，以此分发不同数量的网卡包到不同的队列&lt;/div&gt;&lt;div&gt;ethtool -x eth0&lt;/div&gt;&lt;div&gt;5. 调整RX哈希字段for network flows&lt;/div&gt;&lt;div&gt;加入源端口和目的端口&lt;/div&gt;&lt;div&gt;ethtool -N eth0 rx-flow-hash udp4 sdfn&lt;/div&gt;&lt;div&gt;6. ntuple filtering for steering network flows&lt;/div&gt;&lt;div&gt;该特性允许用户（通过 ethtool ）指定一些参数来 在硬件上过滤收到的包，然后将其直接放到特定的 RX queue。&lt;/div&gt;&lt;div&gt;例如用户可以指定到特定目 端口的TCP包放到RX queue 1&lt;/div&gt;&lt;div&gt;目的端口是 80 的放到 RX queue 2&lt;/div&gt;&lt;div&gt;ethtool -U eth0 flow-type tcp4 dst-port 80 action 2&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
           <mxGeometry x="510" y="320" width="420" height="310" as="geometry" />
         </mxCell>
-        <mxCell id="0JL8JYg0sagm1pvVuTmE-45" value="" style="endArrow=classic;html=1;entryX=-0.002;entryY=0.11;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="0JL8JYg0sagm1pvVuTmE-15">
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-45" value="" style="endArrow=classic;html=1;entryX=-0.002;entryY=0.11;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;" edge="1" parent="1" source="0JL8JYg0sagm1pvVuTmE-5" target="0JL8JYg0sagm1pvVuTmE-15">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="520" y="-790" as="sourcePoint" />
             <mxPoint x="570" y="-840" as="targetPoint" />
@@ -185,6 +185,72 @@
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="719.5" y="270" as="sourcePoint" />
             <mxPoint x="719.5" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-53" value="" style="endArrow=classic;html=1;entryX=0.42;entryY=-0.005;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="0JL8JYg0sagm1pvVuTmE-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="-750" as="sourcePoint" />
+            <mxPoint x="280" y="-680" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-54" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="-570" as="sourcePoint" />
+            <mxPoint x="280" y="-530" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-55" value="" style="endArrow=classic;html=1;entryX=0.43;entryY=0.031;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="0JL8JYg0sagm1pvVuTmE-6">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="-450" as="sourcePoint" />
+            <mxPoint x="280" y="-400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-56" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="-330" as="sourcePoint" />
+            <mxPoint x="280" y="-290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-57" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="-210" as="sourcePoint" />
+            <mxPoint x="280" y="-140" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-58" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="90" as="sourcePoint" />
+            <mxPoint x="280" y="150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-59" value="" style="endArrow=classic;html=1;entryX=0.434;entryY=0.034;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="0JL8JYg0sagm1pvVuTmE-9">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="-50" as="sourcePoint" />
+            <mxPoint x="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-60" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="340" as="sourcePoint" />
+            <mxPoint x="280" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-61" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="230" as="sourcePoint" />
+            <mxPoint x="280" y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-62" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="490" as="sourcePoint" />
+            <mxPoint x="280" y="550" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-63" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="630" as="sourcePoint" />
+            <mxPoint x="280" y="670" as="targetPoint" />
           </mxGeometry>
         </mxCell>
       </root>
