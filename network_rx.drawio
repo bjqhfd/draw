@@ -1,50 +1,47 @@
-<mxfile host="app.diagrams.net" modified="2021-01-13T07:27:41.895Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" etag="g-aCAwl2zLMNoJD_lvig" version="14.0.1" type="github">
+<mxfile host="app.diagrams.net" modified="2021-01-13T07:47:23.975Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" etag="Eo_DA3xGn-ju7-SPM8JX" version="14.0.1" type="github">
   <diagram id="WGyHwO1dzaSm4JvsysSr" name="Page-1">
     <mxGraphModel dx="1449" dy="1812" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="0JL8JYg0sagm1pvVuTmE-2" value="包从外部网络进入网卡" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="240" y="200" width="280" height="80" as="geometry" />
+          <mxGeometry x="274" y="630" width="280" height="80" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-3" value="网卡（通过 DMA）将包 copy 到内核内存中的 ring buffer" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="240" y="320" width="280" height="80" as="geometry" />
+          <mxGeometry x="274" y="750" width="280" height="80" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-5" value="加载网卡驱动，初始化" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="240" y="-800" width="280" height="50" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-6" value="产生硬件中断，通知系统收到了一个包" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="240" y="440" width="280" height="80" as="geometry" />
+          <mxGeometry x="274" y="870" width="280" height="80" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-7" value="驱动调用 NAPI，如果轮询（poll）还没开始，就开始轮询" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="240" y="560" width="280" height="80" as="geometry" />
+          <mxGeometry x="274" y="990" width="280" height="80" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-8" value="ksoftirqd 进程调用 NAPI 的 poll 函数从 ring buffer 收包（poll 函数是网卡 驱动在初始化阶段注册的；每个 CPU 上都运行着一个 ksoftirqd 进程，在系统启动期 间就注册了）" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="240" y="710" width="280" height="90" as="geometry" />
+          <mxGeometry x="274" y="1140" width="280" height="90" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-9" value="ring buffer 里包对应的内存区域解除映射（unmapped）" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="240" y="840" width="280" height="100" as="geometry" />
+          <mxGeometry x="274" y="1270" width="280" height="100" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-10" value="（通过 DMA 进入）内存的数据包以 skb 的形式被送至更上层处理" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="240" y="1000" width="280" height="80" as="geometry" />
+          <mxGeometry x="274" y="1430" width="280" height="80" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-11" value="如果 packet steering 功能打开，或者网卡有多队列，网卡收到的包会被分发到多个 CPU" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="240" y="1120" width="280" height="70" as="geometry" />
+          <mxGeometry x="274" y="1550" width="280" height="70" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-12" value="包从队列进入协议层" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="240" y="1240" width="280" height="100" as="geometry" />
+          <mxGeometry x="274" y="1670" width="280" height="100" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-13" value="协议层处理包" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="240" y="1400" width="280" height="80" as="geometry" />
+          <mxGeometry x="274" y="1830" width="280" height="80" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-14" value="包从协议层进入相应 socket 的接收队列" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="240" y="1520" width="280" height="80" as="geometry" />
+          <mxGeometry x="274" y="1950" width="280" height="80" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-15" value="&lt;h3&gt;初始化&lt;/h3&gt;&lt;div&gt;drivers/net/ethernet/intel/igb/igb_main.c&lt;/div&gt;&lt;div&gt;static int __init igb_init_module(void)&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;&amp;nbsp; ret = pci_register_driver(&amp;amp;igb_driver);&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
           <mxGeometry x="640" y="-960" width="440" height="130" as="geometry" />
-        </mxCell>
-        <mxCell id="0JL8JYg0sagm1pvVuTmE-16" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="640" y="240" width="440" height="110" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-18" value="&lt;h3&gt;PCI 初始化&lt;/h3&gt;&lt;div&gt;Intel I350 网卡是 PCI express 设备&lt;/div&gt;&lt;div&gt;当设备驱动编译时，MODULE_DEVICE_TABLE 宏（定义在 include/module.h）&amp;nbsp;&lt;/div&gt;&lt;div&gt;会导出一个 PCI 设备 ID 列表（a table of PCI device IDs），&lt;/div&gt;&lt;div&gt;驱动据此识别它可以 控制的设备，内核也会依据这个列表对不同设备加载相应驱动&lt;/div&gt;&lt;div&gt;igb 驱动的设备表和 PCI 设备 ID&lt;/div&gt;&lt;div&gt;static DEFINE_PCI_DEVICE_TABLE(igb_pci_tbl) = {&lt;/div&gt;&lt;div&gt;&amp;nbsp; { PCI_VDEVICE(INTEL, E1000_DEV_ID_I210_FIBER), board_82575 },&lt;/div&gt;&lt;div&gt;&amp;nbsp; { PCI_VDEVICE(INTEL, E1000_DEV_ID_I210_SERDES), board_82575 },&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;&lt;div&gt;MODULE_DEVICE_TABLE(pci, igb_pci_tbl);&lt;/div&gt;&lt;div&gt;static struct pci_driver igb_driver = {&lt;/div&gt;&lt;div&gt;&amp;nbsp; .id_table = igb_pci_tbl,&lt;/div&gt;&lt;div&gt;&amp;nbsp; .probe&amp;nbsp; &amp;nbsp; = igb_probe,&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
           <mxGeometry x="640" y="-800" width="440" height="220" as="geometry" />
@@ -73,7 +70,7 @@
         <mxCell id="0JL8JYg0sagm1pvVuTmE-25" value="&lt;h3&gt;NAPI&lt;/h3&gt;&lt;div&gt;NAPI 的使用方式：&lt;/div&gt;&lt;div&gt;1. 驱动打开 NAPI 功能，默认处于未工作状态（没有在收包）&lt;/div&gt;&lt;div&gt;2. 数据包到达，网卡通过DMA写到内存&lt;/div&gt;&lt;div&gt;3. 网卡触发一个硬中断，中断处理函数开始执行&lt;/div&gt;&lt;div&gt;4. 软中断（softirq），唤醒 NAPI 子系统。这会触发在一个单独的线程里,调用驱动注册的 poll 方法收包&lt;/div&gt;&lt;div&gt;5. 驱动禁止网卡产生新的硬件中断。这样做是为了NAPI能够在收包的时候不会被新的中断打扰&lt;/div&gt;&lt;div&gt;6. 一旦没有包需要收了，NAPI 关闭，网卡的硬中断重新开启&lt;/div&gt;&lt;div&gt;7. 转步骤 2&lt;/div&gt;&lt;div&gt;和传统方式相比，NAPI 一次中断会接收多个包，因此可以减少硬件中断的数量。&lt;/div&gt;&lt;div&gt;poll 方法是通过调用 netif_napi_add 注册到 NAPI 的，同时还可以指定权重 weight，大部分驱动都 hardcode 为 64&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
           <mxGeometry x="1241" y="-440" width="399" height="250" as="geometry" />
         </mxCell>
-        <mxCell id="0JL8JYg0sagm1pvVuTmE-26" value="&lt;h3&gt;igb驱动的NAPI初始化&lt;/h3&gt;&lt;div&gt;1.如果支持 MSI-X，调用 pci_enable_msix 打开它&lt;/div&gt;&lt;div&gt;2.计算和初始化一些配置，包括网卡收发队列的数量&lt;/div&gt;&lt;div&gt;3.调用 igb_alloc_q_vector 创建每个发送和接收队列&lt;/div&gt;&lt;div&gt;4.igb_alloc_q_vector 会进一步调用 netif_napi_add 注册 poll 方法到 NAPI 变量&lt;/div&gt;&lt;div&gt;&lt;div&gt;static int igb_alloc_q_vector(struct igb_adapter *adapter)&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;&amp;nbsp; /* initialize NAPI */&lt;/div&gt;&lt;div&gt;&amp;nbsp; netif_napi_add(adapter-&amp;gt;netdev, &amp;amp;q_vector-&amp;gt;napi, igb_poll, 64);&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-26" value="&lt;h3&gt;igb驱动的NAPI初始化&lt;/h3&gt;&lt;div&gt;1.如果支持 MSI-X，调用 pci_enable_msix 打开它&lt;/div&gt;&lt;div&gt;2.计算和初始化一些配置，包括网卡收发队列的数量&lt;/div&gt;&lt;div&gt;3.调用 igb_alloc_q_vector 创建每个发送和接收队列&lt;/div&gt;&lt;div&gt;4.igb_alloc_q_vector 会进一步调用 netif_napi_add 注册 poll 方法到 NAPI 变量&lt;/div&gt;&lt;div&gt;&lt;div&gt;static int igb_alloc_q_vector(struct igb_adapter *adapter)&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;&amp;nbsp; /* initialize NAPI */&lt;/div&gt;&lt;h3&gt;&amp;nbsp; netif_napi_add(adapter-&amp;gt;netdev, &amp;amp;q_vector-&amp;gt;napi, igb_poll, 64);&lt;/h3&gt;&lt;div&gt;}&lt;/div&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
           <mxGeometry x="1241" y="-160" width="399" height="200" as="geometry" />
         </mxCell>
         <mxCell id="0JL8JYg0sagm1pvVuTmE-28" value="" style="endArrow=classic;html=1;entryX=0;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" target="0JL8JYg0sagm1pvVuTmE-24">
@@ -96,6 +93,12 @@
             <mxPoint x="950" y="-150" as="sourcePoint" />
             <mxPoint x="1000" y="-200" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-31" value="&lt;h3&gt;启用网卡(Bring A Network Device Up)&lt;/h3&gt;&lt;div&gt;structure net_device_ops变量包含网卡启用、发包、设置 mac 地址等回调函数&lt;/div&gt;&lt;div&gt;当启用一个网卡时（例如ifconfig eth0 up），net_device_ops 的 ndo_open 方法会被调用。&lt;/div&gt;&lt;div&gt;它通常会做以下事情：&lt;/div&gt;&lt;div&gt;1.分配RX、TX队列内存, 网卡可以有多队列(multiqueue)&lt;/div&gt;&lt;div&gt;2.打开NAPI功能&lt;/div&gt;&lt;div&gt;3.注册中断处理函数&lt;/div&gt;&lt;div&gt;4.打开（enable）硬中断&lt;/div&gt;&lt;div&gt;igb 驱动中，这个方法对应的是 igb_open 函数。&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="640" y="-120" width="340" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-33" value="&lt;h3&gt;准备从网络接收数据&lt;/h3&gt;&lt;div&gt;网卡使用 DMA 将数据直接写到内存，接下来操作系统可以直接从里 面读取。所使用的数据结构是ring buffer（环形缓冲区）&lt;/div&gt;&lt;div&gt;设备驱动必须和操作系统合作，预留（reserve）出一段内存来给网卡使用。预留成功后，网卡知道了这块内存的地址,&lt;/div&gt;&lt;div&gt;接下来收到的包就会放到这里，进而被操作系统取走。由于这块内存区域是有限的，如果数据包的速率非常快，&lt;/div&gt;&lt;div&gt;单个CPU来不及取走这些包,新来的包就会被丢弃。这时候，Receive Side Scaling（RSS，接收端扩展）或者多队列（ multiqueue）一类的技术可能就会排上用场。&lt;/div&gt;&lt;div&gt;Intel I350 网卡支持多队列，我们可以在 igb 的驱动里看出来。igb 驱动启用的时候,最开始做的事情之一就是调用igb_setup_all_rx_resources 函数。这个函数会对每个RX队列调用igb_setup_rx_resources,里面会管理 DMA 的内存.&lt;/div&gt;&lt;div&gt;RX队列的数量和大小可以通过 ethtool 进行配置，调整这两个参数会对收包或者丢包产生可见影响。&lt;/div&gt;&lt;div&gt;网卡通过对 packet 头（例如源地址、目的地址、端口等）做哈希来决定将 packet 放到 哪个RX队列.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="80" width="530" height="290" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
