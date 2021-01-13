@@ -1,1 +1,25 @@
-<mxfile host="app.diagrams.net" modified="2021-01-13T08:57:34.802Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" version="14.1.9" etag="KHqG5XqtgyvTl77bmWEQ" type="github"><diagram id="fZlRgXpZP35zAibEW_lQ">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2021-01-13T09:22:27.758Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" etag="lBO8M7qav_EgndNdNia2" version="14.1.9" type="github">
+  <diagram id="fZlRgXpZP35zAibEW_lQ" name="Page-1">
+    <mxGraphModel dx="1449" dy="643" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="tzcgp5JtMaqGH4jP-flQ-7" value="Linux网络设备子系统" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="40" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="tzcgp5JtMaqGH4jP-flQ-8" value="&lt;h3&gt;网络设备子系统的初始化&lt;/h3&gt;&lt;div&gt;网络设备（netdev）的初始化在net_dev_init&lt;/div&gt;&lt;div&gt;net_dev_init为每个CPU创建一个struct softnet_data变量。&lt;/div&gt;&lt;div&gt;这些变量包含一些 指向重要信息的指针：&lt;/div&gt;&lt;div&gt;1. 需要注册到这个 CPU 的 NAPI 变量列表&lt;/div&gt;&lt;div&gt;2. 数据处理 backlog&lt;/div&gt;&lt;div&gt;3. 处理权重&lt;/div&gt;&lt;div&gt;4. receive offload 变量列表&lt;/div&gt;&lt;div&gt;5. receive packet steering 设置&lt;/div&gt;&lt;div&gt;SoftIRQ Handler初始化&lt;/div&gt;&lt;div&gt;net_dev_init分别为接收和发送数据注册了一个软中断处理函数&lt;/div&gt;&lt;div&gt;static int __init net_dev_init(void)&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;h4&gt;&amp;nbsp; open_softirq(NET_TX_SOFTIRQ, net_tx_action);&lt;br&gt;&amp;nbsp; open_softirq(NET_RX_SOFTIRQ, net_rx_action);&lt;/h4&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="360" y="20" width="430" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="tzcgp5JtMaqGH4jP-flQ-9" value="&lt;h3&gt;数据来了&lt;/h3&gt;&lt;div&gt;如果RX队列有足够的描述符（descriptors）,包会通过DMA写到RAM。&lt;/div&gt;&lt;div&gt;设备然后发起对应于它的中断（或者在MSI-X的场景,中断和包达到的RX队列绑定）&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="30" y="320" width="270" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="tzcgp5JtMaqGH4jP-flQ-10" value="" style="endArrow=classic;html=1;entryX=-0.004;entryY=0.177;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="tzcgp5JtMaqGH4jP-flQ-8">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="230" y="64.5" as="sourcePoint" />
+            <mxPoint x="310" y="64.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
