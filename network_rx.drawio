@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-01-13T07:47:23.975Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" etag="Eo_DA3xGn-ju7-SPM8JX" version="14.0.1" type="github">
+<mxfile host="app.diagrams.net" modified="2021-01-13T07:58:02.533Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" etag="2x7s4sOpX4H4hbNSnJtq" version="14.0.1" type="github">
   <diagram id="WGyHwO1dzaSm4JvsysSr" name="Page-1">
     <mxGraphModel dx="1449" dy="1812" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -97,8 +97,32 @@
         <mxCell id="0JL8JYg0sagm1pvVuTmE-31" value="&lt;h3&gt;启用网卡(Bring A Network Device Up)&lt;/h3&gt;&lt;div&gt;structure net_device_ops变量包含网卡启用、发包、设置 mac 地址等回调函数&lt;/div&gt;&lt;div&gt;当启用一个网卡时（例如ifconfig eth0 up），net_device_ops 的 ndo_open 方法会被调用。&lt;/div&gt;&lt;div&gt;它通常会做以下事情：&lt;/div&gt;&lt;div&gt;1.分配RX、TX队列内存, 网卡可以有多队列(multiqueue)&lt;/div&gt;&lt;div&gt;2.打开NAPI功能&lt;/div&gt;&lt;div&gt;3.注册中断处理函数&lt;/div&gt;&lt;div&gt;4.打开（enable）硬中断&lt;/div&gt;&lt;div&gt;igb 驱动中，这个方法对应的是 igb_open 函数。&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
           <mxGeometry x="640" y="-120" width="340" height="210" as="geometry" />
         </mxCell>
-        <mxCell id="0JL8JYg0sagm1pvVuTmE-33" value="&lt;h3&gt;准备从网络接收数据&lt;/h3&gt;&lt;div&gt;网卡使用 DMA 将数据直接写到内存，接下来操作系统可以直接从里 面读取。所使用的数据结构是ring buffer（环形缓冲区）&lt;/div&gt;&lt;div&gt;设备驱动必须和操作系统合作，预留（reserve）出一段内存来给网卡使用。预留成功后，网卡知道了这块内存的地址,&lt;/div&gt;&lt;div&gt;接下来收到的包就会放到这里，进而被操作系统取走。由于这块内存区域是有限的，如果数据包的速率非常快，&lt;/div&gt;&lt;div&gt;单个CPU来不及取走这些包,新来的包就会被丢弃。这时候，Receive Side Scaling（RSS，接收端扩展）或者多队列（ multiqueue）一类的技术可能就会排上用场。&lt;/div&gt;&lt;div&gt;Intel I350 网卡支持多队列，我们可以在 igb 的驱动里看出来。igb 驱动启用的时候,最开始做的事情之一就是调用igb_setup_all_rx_resources 函数。这个函数会对每个RX队列调用igb_setup_rx_resources,里面会管理 DMA 的内存.&lt;/div&gt;&lt;div&gt;RX队列的数量和大小可以通过 ethtool 进行配置，调整这两个参数会对收包或者丢包产生可见影响。&lt;/div&gt;&lt;div&gt;网卡通过对 packet 头（例如源地址、目的地址、端口等）做哈希来决定将 packet 放到 哪个RX队列.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
-          <mxGeometry x="1080" y="80" width="530" height="290" as="geometry" />
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-33" value="&lt;h3&gt;准备从网络接收数据(创建ring buffer和多队列)&lt;/h3&gt;&lt;div&gt;网卡使用 DMA 将数据直接写到内存，接下来操作系统可以直接从里 面读取。所使用的数据结构是ring buffer（环形缓冲区）&lt;/div&gt;&lt;div&gt;设备驱动必须和操作系统合作，预留（reserve）出一段内存来给网卡使用。预留成功后，网卡知道了这块内存的地址,&lt;/div&gt;&lt;div&gt;接下来收到的包就会放到这里，进而被操作系统取走。由于这块内存区域是有限的，如果数据包的速率非常快，&lt;/div&gt;&lt;div&gt;单个CPU来不及取走这些包,新来的包就会被丢弃。这时候，Receive Side Scaling（RSS，接收端扩展）或者多队列（ multiqueue）一类的技术可能就会排上用场。&lt;/div&gt;&lt;div&gt;Intel I350 网卡支持多队列，我们可以在 igb 的驱动里看出来。igb 驱动启用的时候,最开始做的事情之一就是调用igb_setup_all_rx_resources 函数。这个函数会对每个RX队列调用igb_setup_rx_resources,里面会管理 DMA 的内存.&lt;/div&gt;&lt;div&gt;RX队列的数量和大小可以通过 ethtool 进行配置，调整这两个参数会对收包或者丢包产生可见影响。&lt;/div&gt;&lt;div&gt;网卡通过对 packet 头（例如源地址、目的地址、端口等）做哈希来决定将 packet 放到 哪个RX队列.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="990" y="70" width="650" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-34" value="&lt;h3&gt;Enable NAPI&lt;/h3&gt;&lt;div&gt;一般直到网卡被启用之后，NAPI 才被启用&lt;/div&gt;&lt;div&gt;启用NAPI调用 napi_enable 函数就行，这个函数会设置 NAPI 变量（struct napi_struct）中一个表示是否启用的标志位。&lt;/div&gt;&lt;div&gt;NAPI启用后并不是立即开始工 作（而是等硬中断触发）&lt;/div&gt;&lt;div&gt;对于 igb，驱动初始化或者通过 ethtool 修改 queue 数量或大小的时候，会启用每个q_vector的NAPI变量&lt;/div&gt;&lt;div&gt;for (i = 0; i &amp;lt; adapter-&amp;gt;num_q_vectors; i++)&lt;/div&gt;&lt;div&gt;&amp;nbsp; napi_enable(&amp;amp;(adapter-&amp;gt;q_vector[i]-&amp;gt;napi));&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="350" width="640" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-35" value="&lt;h3&gt;注册中断处理函数&lt;/h3&gt;&lt;div&gt;启用NAPI之后，下一步就是注册中断处理函数。设备有多种方式触发一个中断：MSI-X, MSI, legacy interrupts&lt;/div&gt;&lt;div&gt;驱动必须判断出设备支持哪种中断方式，然后注册相应的中断处理函数，这些函数在中断发生的时候会被执行。&lt;/div&gt;&lt;div&gt;MSI-X中断是比较推荐的方式，尤其是对于支持多队列的网卡。因为每个RX队列有独立的MSI-X中断，因此可以被不同的 CPU 处理（通过 irqbalance 方式，或者修改 /proc/irq/IRQ_NUMBER/smp_affinity）.处理中断的CPU也是随后处理这个包的 CPU。&lt;/div&gt;&lt;div&gt;从网卡硬件中断的层面就可以设置让收到的包被不同的 CPU 处理。&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="525" width="640" height="155" as="geometry" />
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-36" value="" style="endArrow=classic;html=1;entryX=-0.011;entryY=0.688;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="0JL8JYg0sagm1pvVuTmE-33">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="927" y="90" as="sourcePoint" />
+            <mxPoint x="890" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-37" value="" style="endArrow=classic;html=1;entryX=0.016;entryY=0.056;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.75;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="0JL8JYg0sagm1pvVuTmE-31" target="0JL8JYg0sagm1pvVuTmE-34">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="850" y="260" as="sourcePoint" />
+            <mxPoint x="900" y="210" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0JL8JYg0sagm1pvVuTmE-38" value="" style="endArrow=classic;html=1;entryX=0.013;entryY=0.034;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.666;exitY=1.011;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="0JL8JYg0sagm1pvVuTmE-31" target="0JL8JYg0sagm1pvVuTmE-35">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="860" y="350" as="sourcePoint" />
+            <mxPoint x="910" y="300" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
