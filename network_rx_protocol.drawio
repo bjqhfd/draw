@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2021-01-14T08:56:18.072Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" etag="3TWYCOaU-gD8NxP0gtu_" version="14.1.9" type="github">
+<mxfile host="app.diagrams.net" modified="2021-01-14T09:04:51.689Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" etag="6gb6QwxKPlJQ-4SBtqQS" version="14.1.9" type="github">
   <diagram id="fZlRgXpZP35zAibEW_lQ" name="Page-1">
-    <mxGraphModel dx="1449" dy="643" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1208" dy="536" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -92,6 +92,24 @@
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="1280" y="1340" as="sourcePoint" />
             <mxPoint x="1280" y="1380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YTzWB60EVm3kckp8Hosf-20" value="&lt;h3 style=&quot;text-align: left&quot;&gt;监控网络数据处理&lt;/h3&gt;&lt;div style=&quot;text-align: left&quot;&gt;如果budget或者time limit到了而仍有包需要处理，那net_rx_action在退出循环之前会更新统计信息。这个信息存储在该 CPU 的struct softnet_data 变量中。&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&amp;nbsp;cat /proc/net/softnet_stat&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="1630" width="570" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="YTzWB60EVm3kckp8Hosf-21" value="&lt;h3&gt;网络数据处理调优&lt;/h3&gt;&lt;div&gt;调整net_rx_action budget&lt;/div&gt;&lt;div&gt;net_rx_action budget表示一个CPU单次轮询（poll）所允许的最大收包数量。单次poll收包时，&lt;/div&gt;&lt;div&gt;所有注册到这个CPU的 NAPI变量收包数量之和不能大于这个阈值&lt;/div&gt;&lt;div&gt;sysctl -w net.core.netdev_budget=600&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="1730" width="480" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="YTzWB60EVm3kckp8Hosf-22" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1280" y="1600" as="sourcePoint" />
+            <mxPoint x="1280" y="1630" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YTzWB60EVm3kckp8Hosf-23" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1280" y="1710" as="sourcePoint" />
+            <mxPoint x="1280" y="1730" as="targetPoint" />
           </mxGeometry>
         </mxCell>
       </root>
