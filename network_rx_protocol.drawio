@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-01-14T03:19:22.730Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" etag="ANV2Xa4bIxoHm-qtKZuO" version="14.1.9" type="github">
+<mxfile host="app.diagrams.net" modified="2021-01-14T08:56:18.072Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" etag="3TWYCOaU-gD8NxP0gtu_" version="14.1.9" type="github">
   <diagram id="fZlRgXpZP35zAibEW_lQ" name="Page-1">
     <mxGraphModel dx="1449" dy="643" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -20,10 +20,10 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="YTzWB60EVm3kckp8Hosf-1" value="&lt;h3&gt;中断处理函数&lt;/h3&gt;&lt;div&gt;中断处理函数应该将尽可能多的处理逻辑移出（到软中断）, 发起一个中断后，其他的中断就会被屏蔽&lt;/div&gt;&lt;div&gt;static irqreturn_t igb_msix_ring(int irq, void *data)&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;&amp;nbsp; struct igb_q_vector *q_vector = data;&lt;/div&gt;&lt;div&gt;&amp;nbsp; /* Write the ITR value calculated from the previous interrupt. */&lt;/div&gt;&lt;div&gt;&amp;nbsp; igb_write_itr(q_vector);&lt;/div&gt;&lt;div&gt;&amp;nbsp; napi_schedule(&amp;amp;q_vector-&amp;gt;napi);&lt;/div&gt;&lt;div&gt;&amp;nbsp; return IRQ_HANDLED;&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;&lt;div&gt;首先，它调用igb_write_itr更新一个硬件寄存器。对这个例子，这个寄存器是记录硬件 中断频率的。&lt;/div&gt;&lt;div&gt;这个寄存器和一个叫 “Interrupt Throttling”（也叫 “Interrupt Coalescing”）的硬件特性相关，这个特性可以平滑传送到 CPU 的中断数量。&lt;/div&gt;&lt;div&gt;第二，触发 napi_schedule，如果NAPI的处理循环还没开始的话，这会唤醒它。注意，这个处理循环是在软中断中执行的，而不是硬中断。&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
-          <mxGeometry x="360" y="320" width="810" height="270" as="geometry" />
+          <mxGeometry x="360" y="320" width="750" height="270" as="geometry" />
         </mxCell>
         <mxCell id="YTzWB60EVm3kckp8Hosf-2" value="&lt;h3&gt;NAPI 和 napi_schedule&lt;/h3&gt;&lt;div&gt;NAPI存在的意义是无需硬件中断通知就可以接收网络数据。NAPI的轮询循环（poll loop）是受硬件中断触发而跑起来的。&lt;/div&gt;&lt;div&gt;NAPI 功能启用了, 但是默认是没有工作的,直到第一个包到达的时候，网卡触发的一个硬件将它唤醒。&lt;/div&gt;&lt;div&gt;NAPI 功能也会被关闭，直到下一个硬中断再次将它唤起。&lt;/div&gt;&lt;div&gt;napi_schedule调用 __napi_schedule&lt;/div&gt;&lt;div&gt;void __napi_schedule(struct napi_struct *n)&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;&amp;nbsp; unsigned long flags;&lt;/div&gt;&lt;div&gt;&amp;nbsp; local_irq_save(flags);&lt;/div&gt;&lt;div&gt;&amp;nbsp; ____napi_schedule(&amp;amp;__get_cpu_var(softnet_data), n);&lt;/div&gt;&lt;div&gt;&amp;nbsp; local_irq_restore(flags);&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;&lt;div&gt;__get_cpu_var 用于获取属于这个CPU的structure softnet_data 变量&lt;/div&gt;&lt;div&gt;static inline void ____napi_schedule(struct softnet_data *sd,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;struct napi_struct *napi)&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;&amp;nbsp; list_add_tail(&amp;amp;napi-&amp;gt;poll_list, &amp;amp;sd-&amp;gt;poll_list);&lt;/div&gt;&lt;div&gt;&amp;nbsp; __raise_softirq_irqoff(NET_RX_SOFTIRQ);&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;&lt;div&gt;将（从驱动的中断函数中传来的）napi_struct 变量，添加到 poll list，后者 attach 到这个CPU上的softnet_data&lt;/div&gt;&lt;div&gt;__raise_softirq_irqoff触发一个NET_RX_SOFTIRQ类型软中断。这会触发执行net_rx_action（如果没有正在执行），&lt;/div&gt;&lt;div&gt;后者是网络设备初始化的时候注册的.软中断处理函数net_rx_action会调用 NAPI的poll函数来收包。&lt;/div&gt;&lt;div&gt;&lt;div&gt;软中断将会在和硬中断相同的CPU上执行。这个CPU不仅处理这个硬中断，而且通 过NAPI处理接下来的软中断来收包。&lt;/div&gt;&lt;div&gt;但是Receive Packet Steering可以将软中断分给其他CPU&lt;/div&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
-          <mxGeometry x="360" y="630" width="830" height="400" as="geometry" />
+          <mxGeometry x="360" y="630" width="640" height="400" as="geometry" />
         </mxCell>
         <mxCell id="YTzWB60EVm3kckp8Hosf-3" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -32,7 +32,67 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="YTzWB60EVm3kckp8Hosf-4" value="&lt;h3&gt;数据接收调优&lt;/h3&gt;&lt;div&gt;1. 中断合并（Interrupt coalescing）&lt;/div&gt;&lt;div&gt;中断合并会将多个中断事件放到一起，累积到一定阈值后才向 CPU 发起中断请求。&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;2. 调整硬中断亲和性（IRQ affinities）&lt;/div&gt;&lt;div&gt;如果NIC支持RSS/multiqueue, 可以设置亲和性. 指定CPU处理哪个IRQS.&lt;/div&gt;&lt;div&gt;硬件中断/proc/interrupts, 软件中断/proc/softirqs&lt;/div&gt;&lt;div&gt;Set the IRQ affinity for IRQ 8 to CPU 0&lt;/div&gt;&lt;div&gt;echo 1 &amp;gt; /proc/irq/8/smp_affinity&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
-          <mxGeometry x="360" y="1050" width="690" height="160" as="geometry" />
+          <mxGeometry x="360" y="1050" width="450" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="YTzWB60EVm3kckp8Hosf-5" value="&lt;h3&gt;网络数据处理：开始&lt;/h3&gt;&lt;div&gt;一旦软中断代码判断出有softirq处于pending状态，就会开始处理，执行net_rx_action，网络数据处理就此开始&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="360" y="1250" width="330" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="YTzWB60EVm3kckp8Hosf-6" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="640" y="590" as="sourcePoint" />
+            <mxPoint x="640" y="630" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YTzWB60EVm3kckp8Hosf-7" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="480" y="1210" as="sourcePoint" />
+            <mxPoint x="480" y="1250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YTzWB60EVm3kckp8Hosf-8" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="480" y="1030" as="sourcePoint" />
+            <mxPoint x="480" y="1050" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YTzWB60EVm3kckp8Hosf-9" value="&lt;h3&gt;net_rx_action处理循环&lt;/h3&gt;&lt;div&gt;net_rx_action从包所在的内存开始处理，包是被设备通过DMA直接送到内存的。&lt;/div&gt;&lt;div&gt;函数遍历本CPU队列的NAPI 变量列表，依次出队并操作之。处理逻辑考虑任务量（work）和执行时间两个因素：&lt;/div&gt;&lt;div&gt;budget是该CPU的所有NAPI变量的总预算&lt;/div&gt;&lt;div&gt;static __latent_entropy void net_rx_action(struct softirq_action *h)&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;&amp;nbsp; struct softnet_data *sd = this_cpu_ptr(&amp;amp;softnet_data);&lt;/div&gt;&lt;div&gt;&amp;nbsp; int budget = netdev_budget;&lt;/div&gt;&lt;div&gt;&amp;nbsp; LIST_HEAD(list);&lt;/div&gt;&lt;div&gt;&amp;nbsp; LIST_HEAD(repoll);&lt;/div&gt;&lt;div&gt;&amp;nbsp; list_splice_init(&amp;amp;sd-&amp;gt;poll_list, &amp;amp;list);&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; for (;;) {&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; struct napi_struct *n;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; n = list_first_entry(&amp;amp;list, struct napi_struct, poll_list);&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; budget -= napi_poll(n, &amp;amp;repoll); // 循环调用各个driver的poll, 例如igb_poll, 该cpu poll共享该budget&lt;/div&gt;&lt;div&gt;&amp;nbsp; }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="640" width="580" height="270" as="geometry" />
+        </mxCell>
+        <mxCell id="YTzWB60EVm3kckp8Hosf-10" value="" style="endArrow=classic;html=1;entryX=-0.004;entryY=0.358;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="YTzWB60EVm3kckp8Hosf-9">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="690" y="1320" as="sourcePoint" />
+            <mxPoint x="740" y="1270" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="990" y="1080" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YTzWB60EVm3kckp8Hosf-12" value="&lt;h3&gt;NAPI 和设备驱动的合约(contract)&lt;/h3&gt;&lt;div&gt;NAPI 子系统和设备驱动之间的合约，最重要的一点是关闭 NAPI 的条件&lt;/div&gt;&lt;div&gt;1.如果驱动的poll方法用完了它的全部weight（默认 hardcode 64）,那它不更改 NAPI 状态。&lt;/div&gt;&lt;div&gt;net_rx_action loop将这个NAPI变量移到poll_list 末尾，这个循环下次再进入时，处理的就是下一个NAPI变量&lt;/div&gt;&lt;div&gt;list_splice_tail(&amp;amp;repoll, &amp;amp;list);&lt;br&gt;&lt;/div&gt;&lt;div&gt;2.如果驱动的poll方法没有用完全部weight，那它必须关闭 NAPI。&lt;/div&gt;&lt;div&gt;下次有硬件中断触发，驱动的硬件处理函数调用napi_schedule时，NAPI会被重新打开&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1055" y="940" width="590" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="YTzWB60EVm3kckp8Hosf-13" value="&lt;h3&gt;NAPI poll&lt;/h3&gt;&lt;div&gt;驱动程序会分配一段内存用于 DMA，将数据包写到内存。&lt;/div&gt;&lt;div&gt;驱动程序也负责解绑（unmap）这些内存，读取数据，将数据送到网络栈 。&lt;/div&gt;&lt;div&gt;static int igb_poll(struct napi_struct *napi, int budget)&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;&amp;nbsp; igb_clean_rx_irq(q_vector, budget);&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;&lt;div&gt;igb_clean_rx_irq 将网络数据送到网络栈&lt;/div&gt;&lt;div&gt;igb_clean_rx_irq 方法是一个循环，每次处理一个包，直到 budget 用完，或者没有数 据需要处理了。&lt;/div&gt;&lt;div&gt;1.更新skb-&amp;gt;len，表示这个包已经处理的字节数&lt;/div&gt;&lt;div&gt;2.构建的skb经napi_gro_receive()进入协议栈&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1055" y="1130" width="560" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="YTzWB60EVm3kckp8Hosf-14" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1320" y="910" as="sourcePoint" />
+            <mxPoint x="1320" y="940" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YTzWB60EVm3kckp8Hosf-16" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1320" y="1100" as="sourcePoint" />
+            <mxPoint x="1320" y="1130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YTzWB60EVm3kckp8Hosf-17" value="&lt;div&gt;static int igb_clean_rx_irq(struct igb_q_vector *q_vector, const int budget)&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;&amp;nbsp; struct igb_adapter *adapter = q_vector-&amp;gt;adapter;&lt;/div&gt;&lt;div&gt;&amp;nbsp; struct igb_ring *rx_ring = q_vector-&amp;gt;rx.ring;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; while (likely(total_packets &amp;lt; budget)) {&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; struct igb_rx_buffer *rx_buffer;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; rx_buffer = igb_get_rx_buffer(rx_ring, size); // 从ring buffer提取一个buffer&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; skb = igb_construct_skb(rx_ring, rx_buffer, &amp;amp;xdp, rx_desc);&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; /* populate checksum, timestamp, VLAN, and protocol */&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; igb_process_skb_fields(rx_ring, rx_desc, skb);&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; napi_gro_receive(&amp;amp;q_vector-&amp;gt;napi, skb);&lt;/div&gt;&lt;div&gt;&amp;nbsp; }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="1380" width="470" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="YTzWB60EVm3kckp8Hosf-19" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1280" y="1340" as="sourcePoint" />
+            <mxPoint x="1280" y="1380" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
