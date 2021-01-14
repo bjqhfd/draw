@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-01-14T09:09:09.818Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" etag="qbzAbLpIsspHgeZx1ZER" version="14.1.9" type="github">
+<mxfile host="app.diagrams.net" modified="2021-01-14T09:12:24.438Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" etag="2fklyjP_0DCt6A5f6-wp" version="14.1.9" type="github">
   <diagram id="fZlRgXpZP35zAibEW_lQ" name="Page-1">
     <mxGraphModel dx="1449" dy="643" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -55,7 +55,7 @@
             <mxPoint x="480" y="1050" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="YTzWB60EVm3kckp8Hosf-9" value="&lt;h3&gt;net_rx_action处理循环&lt;/h3&gt;&lt;div&gt;net_rx_action从包所在的内存开始处理，包是被设备通过DMA直接送到内存的。&lt;/div&gt;&lt;div&gt;函数遍历本CPU队列的NAPI 变量列表，依次出队并操作之。处理逻辑考虑任务量（work）和执行时间两个因素：&lt;/div&gt;&lt;div&gt;budget是该CPU的所有NAPI变量的总预算&lt;/div&gt;&lt;div&gt;static __latent_entropy void net_rx_action(struct softirq_action *h)&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;&amp;nbsp; struct softnet_data *sd = this_cpu_ptr(&amp;amp;softnet_data);&lt;/div&gt;&lt;div&gt;&amp;nbsp; int budget = netdev_budget;&lt;/div&gt;&lt;div&gt;&amp;nbsp; LIST_HEAD(list);&lt;/div&gt;&lt;div&gt;&amp;nbsp; LIST_HEAD(repoll);&lt;/div&gt;&lt;div&gt;&amp;nbsp; list_splice_init(&amp;amp;sd-&amp;gt;poll_list, &amp;amp;list);&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; for (;;) {&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; struct napi_struct *n;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; n = list_first_entry(&amp;amp;list, struct napi_struct, poll_list);&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; budget -= napi_poll(n, &amp;amp;repoll); // 循环调用各个driver的poll, 例如igb_poll, 该cpu poll共享该budget&lt;/div&gt;&lt;div&gt;&amp;nbsp; }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+        <mxCell id="YTzWB60EVm3kckp8Hosf-9" value="&lt;h3&gt;net_rx_action处理循环&lt;/h3&gt;&lt;div&gt;net_rx_action从包所在的内存开始处理，包是被设备通过DMA直接送到内存的。&lt;/div&gt;&lt;div&gt;函数遍历本CPU队列的NAPI 变量列表，依次出队并操作之。处理逻辑考虑任务量（work）和执行时间两个因素：&lt;/div&gt;&lt;div&gt;budget是该CPU的所有NAPI变量的总预算&lt;/div&gt;&lt;div&gt;static __latent_entropy void net_rx_action(struct softirq_action *h)&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;&amp;nbsp; struct softnet_data *sd = this_cpu_ptr(&amp;amp;softnet_data);&lt;/div&gt;&lt;div&gt;&amp;nbsp; int budget = netdev_budget;&lt;/div&gt;&lt;div&gt;&amp;nbsp; LIST_HEAD(list);&lt;/div&gt;&lt;div&gt;&amp;nbsp; LIST_HEAD(repoll);&lt;/div&gt;&lt;h4&gt;&amp;nbsp; list_splice_init(&amp;amp;sd-&amp;gt;poll_list, &amp;amp;list);&lt;/h4&gt;&lt;div&gt;&amp;nbsp; for (;;) {&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; struct napi_struct *n;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; n = list_first_entry(&amp;amp;list, struct napi_struct, poll_list);&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; budget -= napi_poll(n, &amp;amp;repoll); // 循环调用各个driver的poll, 例如igb_poll, 该cpu poll共享该budget&lt;/div&gt;&lt;div&gt;&amp;nbsp; }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
           <mxGeometry x="1060" y="640" width="580" height="270" as="geometry" />
         </mxCell>
         <mxCell id="YTzWB60EVm3kckp8Hosf-10" value="" style="endArrow=classic;html=1;entryX=-0.004;entryY=0.358;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="YTzWB60EVm3kckp8Hosf-9">
@@ -114,6 +114,15 @@
         </mxCell>
         <mxCell id="YTzWB60EVm3kckp8Hosf-24" value="&lt;h3&gt;GRO（Generic Receive Offloading）&lt;/h3&gt;&lt;div&gt;Large Receive Offloading (LRO) 是一个硬件优化，GRO 是 LRO 的一种软件实现。&lt;/div&gt;&lt;div&gt;通过合并“足够类似”的包来减少传送给网络栈的包数，这有助于减少CPU的使用量&lt;/div&gt;&lt;div&gt;tcpdump 的抓包点（捕获包的 tap ）在整个栈的更后面一些，在GRO 之后。&lt;/div&gt;&lt;div&gt;使用 ethtool 修改 GRO 配置&lt;/div&gt;&lt;div&gt;-k 查看 GRO 配置：&lt;/div&gt;&lt;div&gt;$ ethtool -k eth0 | grep generic-receive-offload&lt;/div&gt;&lt;div&gt;generic-receive-offload: on&lt;/div&gt;&lt;div&gt;-K 修改 GRO 配置：&lt;/div&gt;&lt;div&gt;$ ethtool -K eth0 gro on&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
           <mxGeometry x="360" y="1480" width="530" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="YTzWB60EVm3kckp8Hosf-25" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="480" y="1410" as="sourcePoint" />
+            <mxPoint x="480" y="1476" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YTzWB60EVm3kckp8Hosf-26" value="各个driver会将各自的poll加到每个cpu的poll_list中，&lt;br&gt;CPU收到softirq时会遍历该poll_list，执行各个driver的poll" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1190" y="270" width="350" height="180" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
