@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2021-01-14T09:04:51.689Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" etag="6gb6QwxKPlJQ-4SBtqQS" version="14.1.9" type="github">
+<mxfile host="app.diagrams.net" modified="2021-01-14T09:09:09.818Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36" etag="qbzAbLpIsspHgeZx1ZER" version="14.1.9" type="github">
   <diagram id="fZlRgXpZP35zAibEW_lQ" name="Page-1">
-    <mxGraphModel dx="1208" dy="536" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1449" dy="643" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -85,7 +85,7 @@
             <mxPoint x="1320" y="1130" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="YTzWB60EVm3kckp8Hosf-17" value="&lt;div&gt;static int igb_clean_rx_irq(struct igb_q_vector *q_vector, const int budget)&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;&amp;nbsp; struct igb_adapter *adapter = q_vector-&amp;gt;adapter;&lt;/div&gt;&lt;div&gt;&amp;nbsp; struct igb_ring *rx_ring = q_vector-&amp;gt;rx.ring;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; while (likely(total_packets &amp;lt; budget)) {&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; struct igb_rx_buffer *rx_buffer;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; rx_buffer = igb_get_rx_buffer(rx_ring, size); // 从ring buffer提取一个buffer&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; skb = igb_construct_skb(rx_ring, rx_buffer, &amp;amp;xdp, rx_desc);&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; /* populate checksum, timestamp, VLAN, and protocol */&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; igb_process_skb_fields(rx_ring, rx_desc, skb);&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; napi_gro_receive(&amp;amp;q_vector-&amp;gt;napi, skb);&lt;/div&gt;&lt;div&gt;&amp;nbsp; }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+        <mxCell id="YTzWB60EVm3kckp8Hosf-17" value="&lt;div&gt;static int igb_clean_rx_irq(struct igb_q_vector *q_vector, const int budget)&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;&amp;nbsp; struct igb_adapter *adapter = q_vector-&amp;gt;adapter;&lt;/div&gt;&lt;div&gt;&amp;nbsp; struct igb_ring *rx_ring = q_vector-&amp;gt;rx.ring;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; while (likely(total_packets &amp;lt; budget)) {&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; struct igb_rx_buffer *rx_buffer;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; rx_buffer = igb_get_rx_buffer(rx_ring, size); // 从ring buffer提取一个buffer&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; skb = igb_construct_skb(rx_ring, rx_buffer, &amp;amp;xdp, rx_desc);&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; /* populate checksum, timestamp, VLAN, and protocol */&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; igb_process_skb_fields(rx_ring, rx_desc, skb);&lt;/div&gt;&lt;h3&gt;&amp;nbsp; &amp;nbsp; napi_gro_receive(&amp;amp;q_vector-&amp;gt;napi, skb);&lt;/h3&gt;&lt;div&gt;&amp;nbsp; }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
           <mxGeometry x="1060" y="1380" width="470" height="220" as="geometry" />
         </mxCell>
         <mxCell id="YTzWB60EVm3kckp8Hosf-19" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
@@ -111,6 +111,9 @@
             <mxPoint x="1280" y="1710" as="sourcePoint" />
             <mxPoint x="1280" y="1730" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="YTzWB60EVm3kckp8Hosf-24" value="&lt;h3&gt;GRO（Generic Receive Offloading）&lt;/h3&gt;&lt;div&gt;Large Receive Offloading (LRO) 是一个硬件优化，GRO 是 LRO 的一种软件实现。&lt;/div&gt;&lt;div&gt;通过合并“足够类似”的包来减少传送给网络栈的包数，这有助于减少CPU的使用量&lt;/div&gt;&lt;div&gt;tcpdump 的抓包点（捕获包的 tap ）在整个栈的更后面一些，在GRO 之后。&lt;/div&gt;&lt;div&gt;使用 ethtool 修改 GRO 配置&lt;/div&gt;&lt;div&gt;-k 查看 GRO 配置：&lt;/div&gt;&lt;div&gt;$ ethtool -k eth0 | grep generic-receive-offload&lt;/div&gt;&lt;div&gt;generic-receive-offload: on&lt;/div&gt;&lt;div&gt;-K 修改 GRO 配置：&lt;/div&gt;&lt;div&gt;$ ethtool -K eth0 gro on&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="360" y="1480" width="530" height="210" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
